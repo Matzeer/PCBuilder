@@ -1,59 +1,32 @@
 package fr.esiea.pcbuilder.domain.entities;
 
 public class Storage extends Component {
-    private int speed0;
-    private int speed1;
-    private int module0;
-    private int module1;
+    private int capacity;
     private double pricePerGb;
-    private String color;
-    private double firstWordLatency;
-    private int casLatency;
+    private String storageType;
+    private int cache;
+    private String formFactor;
+    private String storageInterface;
 
+    //getter
     public Storage(int id, String name, String type, double price, double grade,
-                   int speed0, int speed1, int module0, int module1,
-                   double pricePerGb, String color, double firstWordLatency, int casLatency) {
+                   int capacity, double pricePerGb, String storageType,
+                   int cache, String formFactor, String storageInterface) {
         super(id, name, type, price, grade);
-        this.speed0 = speed0;
-        this.speed1 = speed1;
-        this.module0 = module0;
-        this.module1 = module1;
+        this.capacity = capacity;
         this.pricePerGb = pricePerGb;
-        this.color = color;
-        this.firstWordLatency = firstWordLatency;
-        this.casLatency = casLatency;
+        this.storageType = storageType;
+        this.cache = cache;
+        this.formFactor = formFactor;
+        this.storageInterface = storageInterface;
     }
 
-    public int getSpeed0() {
-        return speed0;
+    public int getCapacity() {
+        return capacity;
     }
 
-    public void setSpeed0(int speed0) {
-        this.speed0 = speed0;
-    }
-
-    public int getSpeed1() {
-        return speed1;
-    }
-
-    public void setSpeed1(int speed1) {
-        this.speed1 = speed1;
-    }
-
-    public int getModule0() {
-        return module0;
-    }
-
-    public void setModule0(int module0) {
-        this.module0 = module0;
-    }
-
-    public int getModule1() {
-        return module1;
-    }
-
-    public void setModule1(int module1) {
-        this.module1 = module1;
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
     }
 
     public double getPricePerGb() {
@@ -64,28 +37,35 @@ public class Storage extends Component {
         this.pricePerGb = pricePerGb;
     }
 
-    public String getColor() {
-        return color;
+    public String getStorageType() {
+        return storageType;
     }
 
-    public void setColor(String color) {
-        this.color = color;
+    public void setStorageType(String storageType) {
+        this.storageType = storageType;
     }
 
-    public double getFirstWordLatency() {
-        return firstWordLatency;
+    public int getCache() {
+        return cache;
     }
 
-    public void setFirstWordLatency(double firstWordLatency) {
-        this.firstWordLatency = firstWordLatency;
+    public void setCache(int cache) {
+        this.cache = cache;
     }
 
-    public int getCasLatency() {
-        return casLatency;
+    public String getFormFactor() {
+        return formFactor;
     }
 
-    public void setCasLatency(int casLatency) {
-        this.casLatency = casLatency;
+    public void setFormFactor(String formFactor) {
+        this.formFactor = formFactor;
     }
 
+    public String getStorageInterface() {
+        return storageInterface;
+    }
+
+    public void setStorageInterface(String storageInterface) {
+        this.storageInterface = storageInterface;
+    }
 }
