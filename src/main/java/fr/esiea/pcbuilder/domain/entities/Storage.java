@@ -1,5 +1,7 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.shared.enums.Categories;
+
 public class Storage extends Component {
     private int capacity;
     private double pricePerGb;
@@ -8,11 +10,10 @@ public class Storage extends Component {
     private String formFactor;
     private String storageInterface;
 
-    //getter
-    public Storage(int id, String name, String type, double price, double grade,
+    public Storage(int id, String name, double price, double grade,
                    int capacity, double pricePerGb, String storageType,
                    int cache, String formFactor, String storageInterface) {
-        super(id, name, type, price, grade);
+        super(id, name, Categories.INTERNAL_HARD_DRIVE, price, grade);
         this.capacity = capacity;
         this.pricePerGb = pricePerGb;
         this.storageType = storageType;

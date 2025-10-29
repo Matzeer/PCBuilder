@@ -1,5 +1,7 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.shared.enums.Categories;
+
 public class Gpu extends Component {
     private String chipset;
     private int memory;
@@ -8,10 +10,10 @@ public class Gpu extends Component {
     private String color;
     private int length;
 
-    public Gpu(int id, String name, String type, double price, double grade,
+    public Gpu(int id, String name, double price, double grade,
                String chipset, int memory, int coreClock,
                int boostClock, String color, int length) {
-        super(id, name, type, price, grade);
+        super(id, name, Categories.VIDEO_CARD, price, grade);
         this.chipset = chipset;
         this.memory = memory;
         this.coreClock = coreClock;

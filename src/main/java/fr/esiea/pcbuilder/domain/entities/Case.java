@@ -1,5 +1,7 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.shared.enums.Categories;
+
 public class Case extends Component {
     private String color;
     private String psu;
@@ -7,10 +9,10 @@ public class Case extends Component {
     private int external525Bays;
     private int internal35Bays;
 
-    public Case(int id, String name, String type, double price, double grade,
+    public Case(int id, String name, double price, double grade,
                 String color, String psu, String sidePanel,
                 int external525Bays, int internal35Bays) {
-        super(id, name, type, price, grade);
+        super(id, name, Categories.CASE, price, grade);
         this.color = color;
         this.psu = psu;
         this.sidePanel = sidePanel;

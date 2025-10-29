@@ -1,5 +1,7 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.shared.enums.Categories;
+
 public class Ram extends Component {
     private int speed0;
     private int speed1;
@@ -10,10 +12,10 @@ public class Ram extends Component {
     private int firstWordLatency;
     private int casLatency;
 
-    public Ram(int id, String name, String type, double price, double grade,
+    public Ram(int id, String name, double price, double grade,
                int speed0, int speed1, int module0, int module1, int pricePerGb,
                String color, int firstWordLatency, int casLatency) {
-        super(id, name, type, price, grade);
+        super(id, name, Categories.MEMORY, price, grade);
         this.speed0 = speed0;
         this.speed1 = speed1;
         this.module0 = module0;

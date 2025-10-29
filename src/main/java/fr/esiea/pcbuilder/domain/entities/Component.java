@@ -1,16 +1,18 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.shared.enums.Categories;
+
 public abstract class Component {
     private int id;
     private String name;
-    private String type;
+    private Categories category;
     private double price;
     private double grade;
 
-    public Component(int id, String name, String type, double price, double grade) {
+    public Component(int id, String name, Categories category, double price, double grade) {
         this.id = id;
         this.name = name;
-        this.type = type;
+        this.category = category;
         this.price = price;
         this.grade = grade;
     }
@@ -31,12 +33,12 @@ public abstract class Component {
         this.name = name;
     }
 
-    public String getType() {
-        return type;
+    public Categories getCategory() {
+        return category;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setCategory(Categories category) {
+        this.category = category;
     }
 
     public double getPrice() {
