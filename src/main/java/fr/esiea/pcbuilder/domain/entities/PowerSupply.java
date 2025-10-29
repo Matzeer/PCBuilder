@@ -1,14 +1,16 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.shared.enums.Categories;
+
 public class PowerSupply extends Component {
     private String efficiency;
     private int wattage;
     private String modular;
     private String color;
 
-    public PowerSupply(int id, String name, String type, double price, double grade,
+    public PowerSupply(int id, String name, double price, double grade,
                        String efficiency, int wattage, String modular, String color) {
-        super(id, name, type, price, grade);
+        super(id, name, Categories.POWER_SUPPLY, price, grade);
         this.efficiency = efficiency;
         this.wattage = wattage;
         this.modular = modular;

@@ -1,5 +1,7 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.shared.enums.Categories;
+
 public class Cpu extends Component {
     private int coreCount;
     private double coreClock;
@@ -8,10 +10,10 @@ public class Cpu extends Component {
     private String graphics;
     private boolean smt;
 
-    public Cpu(int id, String name, String type, double price, double grade,
+    public Cpu(int id, String name, double price, double grade,
                int coreCount, double coreClock, double boostClock,
                int tdp, String graphics, boolean smt) {
-        super(id, name, type, price, grade);
+        super(id, name, Categories.CPU, price, grade);
         this.coreCount = coreCount;
         this.coreClock = coreClock;
         this.boostClock = boostClock;

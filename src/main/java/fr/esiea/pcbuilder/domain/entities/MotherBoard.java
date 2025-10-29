@@ -1,5 +1,7 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.shared.enums.Categories;
+
 public class MotherBoard extends Component {
     private String socket;
     private String formFactor;
@@ -7,10 +9,10 @@ public class MotherBoard extends Component {
     private int memorySlots;
     private String color;
 
-    public MotherBoard(int id, String name, String type, double price, double grade,
+    public MotherBoard(int id, String name, double price, double grade,
                        String socket, String formFactor, int maxMemory,
                        int memorySlots, String color) {
-        super(id, name, type, price, grade);
+        super(id, name, Categories.MOTHERBOARD, price, grade);
         this.socket = socket;
         this.formFactor = formFactor;
         this.maxMemory = maxMemory;
