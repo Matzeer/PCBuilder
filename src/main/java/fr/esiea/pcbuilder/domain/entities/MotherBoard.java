@@ -3,7 +3,7 @@ package fr.esiea.pcbuilder.domain.entities;
 public class MotherBoard extends Component {
     private String socket;
     private String formFactor;
-    private int maxMemory; // in GB
+    private int maxMemory;
     private int memorySlots;
     private String color;
 

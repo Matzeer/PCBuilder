@@ -5,18 +5,20 @@ public class Ram extends Component {
     private int speed1;
     private int module0;
     private int module1;
+    private int pricePerGb;
     private String color;
     private int firstWordLatency;
     private int casLatency;
 
     public Ram(int id, String name, String type, double price, double grade,
-               int speed0, int speed1, int module0, int module1,
+               int speed0, int speed1, int module0, int module1, int pricePerGb,
                String color, int firstWordLatency, int casLatency) {
         super(id, name, type, price, grade);
         this.speed0 = speed0;
         this.speed1 = speed1;
         this.module0 = module0;
         this.module1 = module1;
+        this.pricePerGb = pricePerGb;
         this.color = color;
         this.firstWordLatency = firstWordLatency;
         this.casLatency = casLatency;
@@ -52,6 +54,14 @@ public class Ram extends Component {
 
     public void setModule1(int module1) {
         this.module1 = module1;
+    }
+
+    public int getPricePerGb() {
+        return pricePerGb;
+    }
+
+    public void setPricePerGb(int pricePerGb) {
+        this.pricePerGb = pricePerGb;
     }
 
     public String getColor() {
