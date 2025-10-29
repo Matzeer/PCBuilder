@@ -4,8 +4,6 @@ import fr.esiea.pcbuilder.domain.factories.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.assertNotNull;
-
 public class ComputerTest {
     @Test
     void ComputerCanBeCreated() {
