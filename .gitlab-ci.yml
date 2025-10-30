@@ -1,0 +1,8 @@
+stages: [test]
+
+image: maven:3.9-eclipse-temurin-21
+
+test:
+  stage: test
+  script:
+    - mvn clean verify
