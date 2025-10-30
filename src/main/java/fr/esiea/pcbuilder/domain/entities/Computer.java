@@ -9,6 +9,8 @@ public class Computer {
     private MotherBoard motherBoard;
     private Storage storage;
 
+    public Computer(){}
+
     public Computer(Case desktopCase, PowerSupply powerSupply, Ram ram,
                     Cpu cpu, Gpu gpu, MotherBoard motherBoard, Storage storage) {
         this.desktopCase = desktopCase;
