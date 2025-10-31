@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.application.dto.MotherBoardDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 
 public class MotherBoard extends Component {
@@ -62,4 +63,17 @@ public class MotherBoard extends Component {
         this.color = color;
     }
 
+    public MotherBoardDTO toDTO() {
+        return new MotherBoardDTO(
+                this.getId(),
+                this.getName(),
+                this.getPrice(),
+                this.getGrade(),
+                this.socket,
+                this.formFactor,
+                this.maxMemory,
+                this.memorySlots,
+                this.color
+        );
+    }
 }

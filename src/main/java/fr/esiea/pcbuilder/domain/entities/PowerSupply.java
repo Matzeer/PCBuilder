@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.application.dto.PowerSupplyDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 
 public class PowerSupply extends Component {
@@ -49,4 +50,16 @@ public class PowerSupply extends Component {
         this.color = color;
     }
 
+    public PowerSupplyDTO toDTO() {
+        return new PowerSupplyDTO(
+                this.getId(),
+                this.getName(),
+                this.getPrice(),
+                this.getGrade(),
+                this.efficiency,
+                this.wattage,
+                this.modular,
+                this.color
+        );
+    }
 }

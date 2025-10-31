@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.application.dto.StorageDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 
 public class Storage extends Component {
@@ -68,5 +69,20 @@ public class Storage extends Component {
 
     public void setStorageInterface(String storageInterface) {
         this.storageInterface = storageInterface;
+    }
+
+    public StorageDTO toDTO() {
+        return new StorageDTO(
+                this.getId(),
+                this.getName(),
+                this.getPrice(),
+                this.getGrade(),
+                this.capacity,
+                this.pricePerGb,
+                this.storageType,
+                this.cache,
+                this.formFactor,
+                this.storageInterface
+        );
     }
 }

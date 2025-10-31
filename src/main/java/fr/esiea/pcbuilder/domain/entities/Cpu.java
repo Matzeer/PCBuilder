@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.application.dto.CpuDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 
 public class Cpu extends Component {
@@ -68,5 +69,20 @@ public class Cpu extends Component {
 
     public void setSmt(boolean smt) {
         this.smt = smt;
+    }
+
+    public CpuDTO toDTO(){
+        return new CpuDTO(
+                this.getId(),
+                this.getName(),
+                this.getPrice(),
+                this.getGrade(),
+                this.coreCount,
+                this.coreClock,
+                this.boostClock,
+                this.tdp,
+                this.graphics,
+                this.smt
+        );
     }
 }

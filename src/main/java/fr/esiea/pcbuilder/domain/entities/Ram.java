@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.application.dto.RamDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 
 public class Ram extends Component {
@@ -90,4 +91,20 @@ public class Ram extends Component {
         this.casLatency = casLatency;
     }
 
+    public RamDTO toDTO() {
+        return new RamDTO(
+                this.getId(),
+                this.getName(),
+                this.getPrice(),
+                this.getGrade(),
+                this.speed0,
+                this.speed1,
+                this.module0,
+                this.module1,
+                this.pricePerGb,
+                this.color,
+                this.firstWordLatency,
+                this.casLatency
+        );
+    }
 }

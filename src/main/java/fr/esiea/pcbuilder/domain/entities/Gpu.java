@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.application.dto.GpuDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 
 public class Gpu extends Component {
@@ -70,5 +71,20 @@ public class Gpu extends Component {
 
     public void setLength(int length) {
         this.length = length;
+    }
+
+    public GpuDTO toDTO() {
+        return new GpuDTO(
+                this.getId(),
+                this.getName(),
+                this.getPrice(),
+                this.getGrade(),
+                this.getChipset(),
+                this.getMemory(),
+                this.getCoreClock(),
+                this.getBoostClock(),
+                this.getColor(),
+                this.getLength()
+        );
     }
 }
