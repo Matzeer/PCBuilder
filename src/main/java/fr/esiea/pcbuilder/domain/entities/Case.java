@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.domain.entities;
 
+import fr.esiea.pcbuilder.application.dto.CaseDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 
 public class Case extends Component {
@@ -58,5 +59,19 @@ public class Case extends Component {
 
     public void setInternal35Bays(int internal35Bays) {
         this.internal35Bays = internal35Bays;
+    }
+
+    public CaseDTO toDTO() {
+        return new CaseDTO(
+                this.getId(),
+                this.getName(),
+                this.getPrice(),
+                this.getGrade(),
+                this.color,
+                this.psu,
+                this.sidePanel,
+                this.external525Bays,
+                this.internal35Bays
+        );
     }
 }
