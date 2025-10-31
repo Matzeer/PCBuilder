@@ -13,74 +13,74 @@ import static org.mockito.Mockito.*;
 class ExportComputersUseCaseTest {
 
     @Test
-    void happy_path_calls_repo_then_exporter_with_same_args() {
+    void executeCallsRepositoryThenExporterWithSameArguments() {
         // Arrange
-        ComputerGateway repo = mock(ComputerGateway.class);
+        ComputerGateway repository = mock(ComputerGateway.class);
         ComputerExporter exporter = mock(ComputerExporter.class);
         List<Computer> computers = List.of();
-        when(repo.getComputers()).thenReturn(computers);
-        ExportComputersUseCase useCase = new ExportComputersUseCase(repo);
+        when(repository.getComputers()).thenReturn(computers);
+        ExportComputersUseCase useCase = new ExportComputersUseCase(repository);
         String path = "/tmp/out.json";
 
         // Act
         useCase.execute(exporter, path);
 
         // Assert
-        verify(repo).getComputers();
+        verify(repository).getComputers();
         verify(exporter).export(computers, path);
-        verifyNoMoreInteractions(repo, exporter);
+        verifyNoMoreInteractions(repository, exporter);
     }
 
     @Test
-    void empty_list_is_still_exported() {
+    void executeExportsEvenWhenListIsEmpty() {
         // Arrange
-        ComputerGateway repo = mock(ComputerGateway.class);
+        ComputerGateway repository = mock(ComputerGateway.class);
         ComputerExporter exporter = mock(ComputerExporter.class);
-        when(repo.getComputers()).thenReturn(List.of());
-        ExportComputersUseCase useCase = new ExportComputersUseCase(repo);
+        when(repository.getComputers()).thenReturn(List.of());
+        ExportComputersUseCase useCase = new ExportComputersUseCase(repository);
         String path = "/tmp/empty.json";
 
         // Act
         useCase.execute(exporter, path);
 
         // Assert
-        verify(repo).getComputers();
+        verify(repository).getComputers();
         verify(exporter).export(List.of(), path);
-        verifyNoMoreInteractions(repo, exporter);
+        verifyNoMoreInteractions(repository, exporter);
     }
 
     @Test
-    void propagates_exception_from_repository() {
+    void executeThrowsWhenRepositoryFails() {
         // Arrange
-        ComputerGateway repo = mock(ComputerGateway.class);
+        ComputerGateway repository = mock(ComputerGateway.class);
         ComputerExporter exporter = mock(ComputerExporter.class);
-        when(repo.getComputers()).thenThrow(new IllegalStateException("repo down"));
-        ExportComputersUseCase useCase = new ExportComputersUseCase(repo);
+        when(repository.getComputers()).thenThrow(new IllegalStateException("Repository failure"));
+        ExportComputersUseCase useCase = new ExportComputersUseCase(repository);
 
         // Act + Assert
         assertThrows(IllegalStateException.class, () ->
                 useCase.execute(exporter, "/tmp/out.json")
         );
-        verify(repo).getComputers();
+        verify(repository).getComputers();
         verifyNoInteractions(exporter);
     }
 
     @Test
-    void propagates_exception_from_exporter() {
+    void executeThrowsWhenExporterFails() {
         // Arrange
-        ComputerGateway repo = mock(ComputerGateway.class);
+        ComputerGateway repository = mock(ComputerGateway.class);
         ComputerExporter exporter = mock(ComputerExporter.class);
         List<Computer> computers = List.of();
-        when(repo.getComputers()).thenReturn(computers);
-        doThrow(new RuntimeException("disk full")).when(exporter).export(computers, "/tmp/out.json");
-        ExportComputersUseCase useCase = new ExportComputersUseCase(repo);
+        when(repository.getComputers()).thenReturn(computers);
+        doThrow(new RuntimeException("Disk full")).when(exporter).export(computers, "/tmp/out.json");
+        ExportComputersUseCase useCase = new ExportComputersUseCase(repository);
 
         // Act + Assert
         assertThrows(RuntimeException.class, () ->
                 useCase.execute(exporter, "/tmp/out.json")
         );
-        verify(repo).getComputers();
+        verify(repository).getComputers();
         verify(exporter).export(computers, "/tmp/out.json");
-        verifyNoMoreInteractions(repo, exporter);
+        verifyNoMoreInteractions(repository, exporter);
     }
 }
