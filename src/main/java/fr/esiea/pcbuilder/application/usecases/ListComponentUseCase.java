@@ -1,6 +1,7 @@
 package fr.esiea.pcbuilder.application.usecases;
 
 import fr.esiea.pcbuilder.application.dto.ComponentDTO;
+import fr.esiea.pcbuilder.application.dto.FiltersDTO;
 import fr.esiea.pcbuilder.application.repositories.ComponentGateway;
 import fr.esiea.pcbuilder.domain.entities.Component;
 import fr.esiea.pcbuilder.shared.enums.Categories;
@@ -16,14 +17,12 @@ public class ListComponentUseCase {
         this.componentGateway = gateway;
     }
 
-    public ArrayList<ComponentDTO> execute(Categories category,
-                                           ArrayList<QueryParams> orders,
-                                           int limit) {
-        if(category == null || limit < 0) {
+    public ArrayList<ComponentDTO> execute(FiltersDTO filtersDTO) {
+        if(filtersDTO.category() == null || filtersDTO.limit() < 0) {
             throw new IllegalArgumentException("Paramètres invalides pour la liste des composants.");
         }
         try {
-            return componentGateway.getComponentListFilteredOrdered(category, orders, limit);
+            return componentGateway.getComponentListFilteredOrdered(filtersDTO);
         } catch (Exception e) {
             throw new RuntimeException("Erreur de lecture des composants : " + e.getMessage(), e);
         }
