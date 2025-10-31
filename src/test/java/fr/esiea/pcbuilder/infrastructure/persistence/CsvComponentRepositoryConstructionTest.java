@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.infrastructure.persistence;
 
+import fr.esiea.pcbuilder.application.dto.FiltersDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 import fr.esiea.pcbuilder.shared.enums.QueryParams;
 import org.junit.jupiter.api.Test;
@@ -43,8 +44,9 @@ class CsvComponentRepositoryConstructionTest {
         Path emptyCsv = tempDir.resolve("empty.csv");
         Files.createFile(emptyCsv);
         CsvComponentRepository repo = new CsvComponentRepository(emptyCsv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, new ArrayList<>(), 10);
         // Act
-        var result = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<QueryParams>(), 10);
+        var result = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertNotNull(result);
         assertEquals(0, result.size());
