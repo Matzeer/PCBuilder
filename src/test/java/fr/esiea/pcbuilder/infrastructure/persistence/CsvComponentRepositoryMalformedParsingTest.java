@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.infrastructure.persistence;
 
+import fr.esiea.pcbuilder.application.dto.FiltersDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
@@ -25,8 +26,9 @@ class CsvComponentRepositoryMalformedParsingTest {
                         1,Ryzen 5 5600X,cpu,notANumber,4.7,6,3.7,4.6,65,Vega,true
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, new ArrayList<>(), 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertTrue(list.isEmpty());
     }
@@ -41,9 +43,10 @@ class CsvComponentRepositoryMalformedParsingTest {
         2,Ryzen 7 5800X,cpu,300.0,4.8,8,3.8,4.7,105, Vega,true
         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, new ArrayList<>(), 10);
 
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
 
         // Assert
         assertEquals(2, list.size());
@@ -65,8 +68,10 @@ class CsvComponentRepositoryMalformedParsingTest {
                         1,RTX 3060,video-card,329.0,4.5,RTX 3060,,1777,1807,Black,245
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.VIDEO_CARD, new ArrayList<>(), 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.VIDEO_CARD, new ArrayList<>(), 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
+
         // Assert
         assertTrue(list.isEmpty());
     }
@@ -81,8 +86,9 @@ class CsvComponentRepositoryMalformedParsingTest {
                         1,SSD,internal-hard-drive,129,9,1000,0,13,SSD,1024,M.2,NVMe
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.INTERNAL_HARD_DRIVE, new ArrayList<>(), 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.INTERNAL_HARD_DRIVE, new ArrayList<>(), 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertTrue(list.isEmpty());
     }
@@ -98,8 +104,9 @@ class CsvComponentRepositoryMalformedParsingTest {
                         2,Ryzen Good,cpu,199.9,4.6,6,3.6,4.4,65,Vega,true
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, new ArrayList<>(), 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertEquals(1, list.size());
         assertEquals("Ryzen Good", list.getFirst().name());
@@ -116,8 +123,9 @@ class CsvComponentRepositoryMalformedParsingTest {
                         1,Ryzen 5 5600X,cpu,200.0,4.7,3.7,4.6,65,Vega,true
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, new ArrayList<>(), 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertTrue(list.isEmpty());
     }
@@ -132,8 +140,9 @@ class CsvComponentRepositoryMalformedParsingTest {
                         1,Corsair,memory,89.99,4.7, ,3600,8,8,5,Black,10,16
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.MEMORY, new ArrayList<>(), 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.MEMORY, new ArrayList<>(), 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertTrue(list.isEmpty());
     }
@@ -148,8 +157,9 @@ class CsvComponentRepositoryMalformedParsingTest {
                         1,NZXT H510,case,89.99,4.5,Black,None,Tempered Glass,,2
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CASE, new ArrayList<>(), 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.CASE, new ArrayList<>(), 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertTrue(list.isEmpty());
     }

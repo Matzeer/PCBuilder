@@ -391,7 +391,7 @@ public class CsvComponentRepository implements ComponentGateway {
 
 
     @Override
-    public ArrayList<ComponentDTO> getComponentListFilteredOrdered(Categories category, ArrayList<QueryParams> orders, int limit) {
+    public ArrayList<ComponentDTO> getComponentListFilteredOrdered(FiltersDTO filtersDTO) {
         try (
                 Reader reader = Files.newBufferedReader(csvPath);
                 CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())
@@ -400,9 +400,9 @@ public class CsvComponentRepository implements ComponentGateway {
             return parser.getRecords().stream()
                     .map(this::convertLinetoComponent)
                     .filter(Objects::nonNull)
-                    .filter(obj -> obj.category() == category)
-                    .sorted(buildComparator(orders))
-                    .limit(limit)
+                    .filter(obj -> obj.category() == filtersDTO.category())
+                    .sorted(buildComparator(filtersDTO.orders()))
+                    .limit(filtersDTO.limit())
                     .collect(Collectors.toCollection(ArrayList::new));
 
         } catch (IOException e) {

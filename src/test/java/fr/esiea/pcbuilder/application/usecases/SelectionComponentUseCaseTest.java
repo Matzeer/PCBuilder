@@ -1,6 +1,8 @@
 package fr.esiea.pcbuilder.application.usecases;
 
-import fr.esiea.pcbuilder.application.dto.ComputerDTO;
+import fr.esiea.pcbuilder.application.dto.*;
+import fr.esiea.pcbuilder.application.mappers.ComponentMapper;
+import fr.esiea.pcbuilder.application.mappers.ComputerMapper;
 import fr.esiea.pcbuilder.domain.entities.*;
 import fr.esiea.pcbuilder.domain.factories.*;
 
@@ -15,9 +17,11 @@ class SelectionComponentUseCaseTest {
         // Arrange
         SelectionComponentUseCase useCase = new SelectionComponentUseCase();
         Cpu cpu = CpuFactory.createExample();
-
+        CpuDTO cpuDto = (CpuDTO) ComponentMapper.toDto(cpu);
+        ComputerDTO result = useCase.execute(cpuDto);
         // Act
-        assertThrows(NullPointerException.class, () -> useCase.execute(cpu));
+        assertNotNull(result.cpu());
+        assertEquals(cpuDto, result.cpu());
     }
 
     @Test
@@ -25,9 +29,11 @@ class SelectionComponentUseCaseTest {
         // Arrange
         SelectionComponentUseCase useCase = new SelectionComponentUseCase();
         Gpu gpu = GpuFactory.createExample();
-
+        GpuDTO gpuDto = (GpuDTO) ComponentMapper.toDto(gpu);
+        ComputerDTO result = useCase.execute(gpuDto);
         // Act
-        assertThrows(NullPointerException.class, () -> useCase.execute(gpu));
+        assertNotNull(result.gpu());
+        assertEquals(gpuDto, result.gpu());
     }
 
     @Test
@@ -35,9 +41,11 @@ class SelectionComponentUseCaseTest {
         // Arrange
         SelectionComponentUseCase useCase = new SelectionComponentUseCase();
         MotherBoard mb = MotherBoardFactory.createExample();
-
+        MotherBoardDTO mbDto = (MotherBoardDTO) ComponentMapper.toDto(mb);
+        ComputerDTO result = useCase.execute(mbDto);
         // Act
-        assertThrows(NullPointerException.class, () -> useCase.execute(mb));
+        assertNotNull(result.motherBoard());
+        assertEquals(mbDto, result.motherBoard());
     }
 
     @Test
@@ -45,9 +53,11 @@ class SelectionComponentUseCaseTest {
         // Arrange
         SelectionComponentUseCase useCase = new SelectionComponentUseCase();
         Ram ram = RamFactory.createExample();
-
+        RamDTO ramDto = (RamDTO) ComponentMapper.toDto(ram);
+        ComputerDTO result = useCase.execute(ramDto);
         // Act
-        assertThrows(NullPointerException.class, () -> useCase.execute(ram));
+        assertNotNull(result.ram());
+        assertEquals(ramDto, result.ram());
     }
 
     @Test
@@ -55,9 +65,11 @@ class SelectionComponentUseCaseTest {
         // Arrange
         SelectionComponentUseCase useCase = new SelectionComponentUseCase();
         Storage storage = StorageFactory.createExample();
-
+        StorageDTO storageDto = (StorageDTO) ComponentMapper.toDto(storage);
+        ComputerDTO result = useCase.execute(storageDto);
         // Act
-        assertThrows(NullPointerException.class, () -> useCase.execute(storage));
+        assertNotNull(result.storage());
+        assertEquals(storageDto, result.storage());
     }
 
     @Test
@@ -65,9 +77,11 @@ class SelectionComponentUseCaseTest {
         // Arrange
         SelectionComponentUseCase useCase = new SelectionComponentUseCase();
         PowerSupply psu = PowerSupplyFactory.createExample();
-
+        PowerSupplyDTO psuDto = (PowerSupplyDTO) ComponentMapper.toDto(psu);
+        ComputerDTO result = useCase.execute(psuDto);
         // Act
-        assertThrows(NullPointerException.class, () -> useCase.execute(psu));
+        assertNotNull(result.powerSupply());
+        assertEquals(psuDto, result.powerSupply());
     }
 
     @Test
@@ -75,9 +89,11 @@ class SelectionComponentUseCaseTest {
         // Arrange
         SelectionComponentUseCase useCase = new SelectionComponentUseCase();
         Case pcCase = CaseFactory.createExample();
-
+        CaseDTO caseDto = (CaseDTO) ComponentMapper.toDto(pcCase);
+        ComputerDTO result = useCase.execute(caseDto);
         // Act
-        assertThrows(NullPointerException.class, () -> useCase.execute(pcCase));
+        assertNotNull(result.desktopCase());
+        assertEquals(caseDto, result.desktopCase());
     }
 
     @Test

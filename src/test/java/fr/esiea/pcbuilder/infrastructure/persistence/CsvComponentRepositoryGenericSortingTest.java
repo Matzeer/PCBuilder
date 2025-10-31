@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.infrastructure.persistence;
 
+import fr.esiea.pcbuilder.application.dto.FiltersDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 import fr.esiea.pcbuilder.shared.enums.QueryParams;
 import org.junit.jupiter.api.Test;
@@ -30,8 +31,9 @@ class CsvComponentRepositoryGenericSortingTest {
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>();
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, orders, 10);
         // Act
-        var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
+        var result = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertEquals(3, result.size());
         assertEquals(2, result.get(0).id());
@@ -53,8 +55,9 @@ class CsvComponentRepositoryGenericSortingTest {
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>();
         orders.add(QueryParams.NAME);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, orders, 10);
         // Act
-        var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
+        var result = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertEquals(3, result.size());
         assertEquals("alpha", result.get(0).name());
@@ -76,8 +79,9 @@ class CsvComponentRepositoryGenericSortingTest {
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>();
         orders.add(QueryParams.PRICE);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, orders, 10);
         // Act
-        var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
+        var result = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertEquals("B", result.get(0).name());
         assertEquals("C", result.get(1).name());
@@ -98,8 +102,9 @@ class CsvComponentRepositoryGenericSortingTest {
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>();
         orders.add(QueryParams.GRADE);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, orders, 10);
         // Act
-        var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
+        var result = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertEquals("B", result.get(0).name());
         assertEquals("C", result.get(1).name());
@@ -122,8 +127,9 @@ class CsvComponentRepositoryGenericSortingTest {
         var orders = new ArrayList<QueryParams>();
         orders.add(QueryParams.PRICE);
         orders.add(QueryParams.NAME);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, orders, 10);
         // Act
-        var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
+        var result = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertEquals(4, result.size());
         assertEquals("Bravo", result.get(0).name());
