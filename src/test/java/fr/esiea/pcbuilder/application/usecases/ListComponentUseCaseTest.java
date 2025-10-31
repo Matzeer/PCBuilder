@@ -1,7 +1,7 @@
 package fr.esiea.pcbuilder.application.usecases;
 
+import fr.esiea.pcbuilder.application.dto.ComponentDTO;
 import fr.esiea.pcbuilder.application.repositories.ComponentGateway;
-import fr.esiea.pcbuilder.domain.entities.Component;
 import fr.esiea.pcbuilder.infrastructure.persistence.CsvComponentRepository;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 import fr.esiea.pcbuilder.shared.enums.QueryParams;
@@ -51,10 +51,10 @@ class ListComponentUseCaseTest {
     void givenValidCpuCategory_whenExecute_thenReturnCpuList() {
         ListComponentUseCase useCase = new ListComponentUseCase(gateway);
 
-        ArrayList<Component> result = useCase.execute(Categories.CPU, new ArrayList<>(), 10);
+        ArrayList<ComponentDTO> result = useCase.execute(Categories.CPU, new ArrayList<>(), 10);
 
         assertEquals(2, result.size());
-        assertTrue(result.stream().allMatch(c -> c.getCategory() == Categories.CPU));
+        assertTrue(result.stream().allMatch(c -> c.category() == Categories.CPU));
     }
 
     @Test
@@ -62,7 +62,7 @@ class ListComponentUseCaseTest {
         ListComponentUseCase useCase = new ListComponentUseCase(gateway);
         ArrayList<QueryParams> orders = new ArrayList<>();
 
-        ArrayList<Component> result = useCase.execute(Categories.CPU, orders, 1);
+        ArrayList<ComponentDTO> result = useCase.execute(Categories.CPU, orders, 1);
 
         assertEquals(1, result.size());
     }
@@ -73,9 +73,9 @@ class ListComponentUseCaseTest {
         ArrayList<QueryParams> orders = new ArrayList<>();
         orders.add(QueryParams.PRICE);
 
-        ArrayList<Component> result = useCase.execute(Categories.CPU, orders, 10);
+        ArrayList<ComponentDTO> result = useCase.execute(Categories.CPU, orders, 10);
         assertEquals(2, result.size());
-        assertTrue(result.get(0).getPrice() <= result.get(1).getPrice());
+        assertTrue(result.get(0).price() <= result.get(1).price());
     }
 
     @Test
@@ -84,9 +84,9 @@ class ListComponentUseCaseTest {
         ArrayList<QueryParams> orders = new ArrayList<>();
         orders.add(QueryParams.valueOf("R_PRICE"));
 
-        ArrayList<Component> result = useCase.execute(Categories.CPU, orders, 10);
+        ArrayList<ComponentDTO> result = useCase.execute(Categories.CPU, orders, 10);
         assertEquals(2, result.size());
-        assertTrue(result.get(0).getPrice() >= result.get(1).getPrice());
+        assertTrue(result.get(0).price() >= result.get(1).price());
     }
 
     @Test
@@ -111,7 +111,7 @@ class ListComponentUseCaseTest {
         CsvComponentRepository repo = new CsvComponentRepository(emptyCsv.toString());
         ListComponentUseCase useCase = new ListComponentUseCase(repo);
 
-        ArrayList<Component> result = useCase.execute(Categories.CPU, new ArrayList<>(), 5);
+        ArrayList<ComponentDTO> result = useCase.execute(Categories.CPU, new ArrayList<>(), 5);
 
         assertTrue(result.isEmpty());
         Files.deleteIfExists(emptyCsv);

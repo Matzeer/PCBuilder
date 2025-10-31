@@ -31,9 +31,9 @@ class CsvComponentRepositoryReverseSortingTest {
         // Act
         var list = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
         // Assert
-        assertEquals("B", list.get(0).getName());
-        assertEquals("C", list.get(1).getName());
-        assertEquals("A", list.get(2).getName());
+        assertEquals("B", list.get(0).name());
+        assertEquals("C", list.get(1).name());
+        assertEquals("A", list.get(2).name());
     }
 
     @Test
@@ -50,9 +50,9 @@ class CsvComponentRepositoryReverseSortingTest {
         // Act
         var list = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
         // Assert
-        assertEquals("gamma", list.get(0).getName());
-        assertEquals("Beta", list.get(1).getName());
-        assertEquals("alpha", list.get(2).getName());
+        assertEquals("gamma", list.get(0).name());
+        assertEquals("Beta", list.get(1).name());
+        assertEquals("alpha", list.get(2).name());
     }
 
     @Test
@@ -69,9 +69,9 @@ class CsvComponentRepositoryReverseSortingTest {
         // Act
         var list = repo.getComponentListFilteredOrdered(Categories.VIDEO_CARD, orders, 10);
         // Assert
-        assertEquals("X", list.get(0).getName());
-        assertEquals("Y", list.get(1).getName());
-        assertEquals("Z", list.get(2).getName());
+        assertEquals("X", list.get(0).name());
+        assertEquals("Y", list.get(1).name());
+        assertEquals("Z", list.get(2).name());
     }
 
     @Test
@@ -88,9 +88,9 @@ class CsvComponentRepositoryReverseSortingTest {
         // Act
         var list = repo.getComponentListFilteredOrdered(Categories.INTERNAL_HARD_DRIVE, orders, 10);
         // Assert
-        assertEquals("S2", list.get(0).getName());
-        assertEquals("S3", list.get(1).getName());
-        assertEquals("S1", list.get(2).getName());
+        assertEquals("S2", list.get(0).name());
+        assertEquals("S3", list.get(1).name());
+        assertEquals("S1", list.get(2).name());
     }
 
     @Test
@@ -107,9 +107,9 @@ class CsvComponentRepositoryReverseSortingTest {
         // Act
         var list = repo.getComponentListFilteredOrdered(Categories.MEMORY, orders, 10);
         // Assert
-        assertEquals("C", list.get(0).getName());
-        assertEquals("A", list.get(1).getName());
-        assertEquals("B", list.get(2).getName());
+        assertEquals("C", list.get(0).name());
+        assertEquals("A", list.get(1).name());
+        assertEquals("B", list.get(2).name());
     }
 
     @Test
@@ -128,8 +128,8 @@ class CsvComponentRepositoryReverseSortingTest {
         // Act
         var list = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
         // Assert
-        assertEquals("Charlie", list.get(0).getName()); // 350 en premier
-        assertEquals("Alpha", list.get(1).getName());   // 200 puis nom croissant
-        assertEquals("Bravo", list.get(2).getName());
+        assertEquals("Charlie", list.get(0).name()); // 350 en premier
+        assertEquals("Alpha", list.get(1).name());   // 200 puis nom croissant
+        assertEquals("Bravo", list.get(2).name());
     }
 }

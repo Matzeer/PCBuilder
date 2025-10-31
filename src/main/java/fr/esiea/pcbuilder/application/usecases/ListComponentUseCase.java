@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.application.usecases;
 
+import fr.esiea.pcbuilder.application.dto.ComponentDTO;
 import fr.esiea.pcbuilder.application.repositories.ComponentGateway;
 import fr.esiea.pcbuilder.domain.entities.Component;
 import fr.esiea.pcbuilder.shared.enums.Categories;
@@ -15,9 +16,9 @@ public class ListComponentUseCase {
         this.componentGateway = gateway;
     }
 
-    public ArrayList<Component> execute(Categories category,
-                                        ArrayList<QueryParams> orders,
-                                        int limit) {
+    public ArrayList<ComponentDTO> execute(Categories category,
+                                           ArrayList<QueryParams> orders,
+                                           int limit) {
         if(category == null || limit < 0) {
             throw new IllegalArgumentException("Paramètres invalides pour la liste des composants.");
         }

@@ -35,12 +35,11 @@ class CsvComponentRepositoryMalformedParsingTest {
     void cpuLineWithInvalidBooleanSmtIsParsedAsFalse() throws Exception {
         // Arrange
         Path csv = tempDir.resolve("cpu_bad_bool.csv");
-        Files.writeString(csv,
-                """
-                        id,name,category,price,grade,core_count,core_clock,boost_clock,tdp,graphics,smt
-                        1,Ryzen 5 5600X,cpu,200.0,4.7,6,3.7,4.6,65,Vega,maybe
-                        2,Ryzen 7 5800X,cpu,300.0,4.8,8,3.8,4.7,105,Vega,true
-                        """);
+        Files.writeString(csv, """
+        id,name,category,price,grade,core_count,core_clock,boost_clock,tdp,graphics,smt
+        1,Ryzen 5 5600X,cpu,200.0,4.7,6,3.7,4.6,65,Vega,maybe
+        2,Ryzen 7 5800X,cpu,300.0,4.8,8,3.8,4.7,105, Vega,true
+        """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
 
         // Act
@@ -49,11 +48,11 @@ class CsvComponentRepositoryMalformedParsingTest {
         // Assert
         assertEquals(2, list.size());
 
-        var cpuFalse = (fr.esiea.pcbuilder.domain.entities.Cpu) list.get(0);
-        var cpuTrue = (fr.esiea.pcbuilder.domain.entities.Cpu) list.get(1);
+        var cpuFalse = (fr.esiea.pcbuilder.application.dto.CpuDTO) list.get(0);
+        var cpuTrue  = (fr.esiea.pcbuilder.application.dto.CpuDTO) list.get(1);
 
-        assertFalse(cpuFalse.isSmt());
-        assertTrue(cpuTrue.isSmt());
+        assertFalse(cpuFalse.smt());
+        assertTrue(cpuTrue.smt());
     }
 
     @Test
@@ -103,7 +102,7 @@ class CsvComponentRepositoryMalformedParsingTest {
         var list = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 10);
         // Assert
         assertEquals(1, list.size());
-        assertEquals("Ryzen Good", list.getFirst().getName());
+        assertEquals("Ryzen Good", list.getFirst().name());
     }
 
     @Test
