@@ -3,20 +3,26 @@ package fr.esiea.pcbuilder.application.usecases;
 import fr.esiea.pcbuilder.application.dto.FiltersDTO;
 import fr.esiea.pcbuilder.domain.entities.UserParams;
 import fr.esiea.pcbuilder.shared.enums.Categories;
+import fr.esiea.pcbuilder.shared.enums.QueryParams;
 
 import java.util.EnumSet;
+import java.util.ArrayList;
 
 public class SelectFiltersUseCase {
     private static final int DEFAULT_LIMIT = 10;
     private static final Categories DEFAULT_CATEGORY = Categories.CPU;
 
-    private UserParams userParams;
-
     public SelectFiltersUseCase() {
-        this.userParams = new UserParams(DEFAULT_CATEGORY, DEFAULT_LIMIT);
     }
 
     public FiltersDTO execute(FiltersDTO request) {
+        if (request == null) {
+            return new FiltersDTO(
+                    DEFAULT_CATEGORY,
+                    new ArrayList<QueryParams>(),
+                    DEFAULT_LIMIT
+            );
+        }
         if (request.limit() <= 0) {
             throw new IllegalArgumentException("Limit must be greater than 0");
         }
@@ -37,9 +43,8 @@ public class SelectFiltersUseCase {
             }
         }
 
-        userParams.setActualCategory(request.category());
+        UserParams userParams = new UserParams(request.category(), request.limit());
         userParams.setOrders(request.orders());
-        userParams.setLimit(request.limit());
 
         return new FiltersDTO(
                 userParams.getActualCategory(),
