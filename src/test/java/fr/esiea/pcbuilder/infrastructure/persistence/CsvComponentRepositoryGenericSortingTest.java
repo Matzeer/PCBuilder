@@ -34,9 +34,9 @@ class CsvComponentRepositoryGenericSortingTest {
         var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
         // Assert
         assertEquals(3, result.size());
-        assertEquals(2, result.get(0).getId());
-        assertEquals(5, result.get(1).getId());
-        assertEquals(9, result.get(2).getId());
+        assertEquals(2, result.get(0).id());
+        assertEquals(5, result.get(1).id());
+        assertEquals(9, result.get(2).id());
     }
 
     @Test
@@ -57,9 +57,9 @@ class CsvComponentRepositoryGenericSortingTest {
         var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
         // Assert
         assertEquals(3, result.size());
-        assertEquals("alpha", result.get(0).getName());
-        assertEquals("Beta", result.get(1).getName());
-        assertEquals("gamma", result.get(2).getName());
+        assertEquals("alpha", result.get(0).name());
+        assertEquals("Beta", result.get(1).name());
+        assertEquals("gamma", result.get(2).name());
     }
 
     @Test
@@ -79,9 +79,9 @@ class CsvComponentRepositoryGenericSortingTest {
         // Act
         var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
         // Assert
-        assertEquals("B", result.get(0).getName());
-        assertEquals("C", result.get(1).getName());
-        assertEquals("A", result.get(2).getName());
+        assertEquals("B", result.get(0).name());
+        assertEquals("C", result.get(1).name());
+        assertEquals("A", result.get(2).name());
     }
 
     @Test
@@ -101,9 +101,9 @@ class CsvComponentRepositoryGenericSortingTest {
         // Act
         var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
         // Assert
-        assertEquals("B", result.get(0).getName());
-        assertEquals("C", result.get(1).getName());
-        assertEquals("A", result.get(2).getName());
+        assertEquals("B", result.get(0).name());
+        assertEquals("C", result.get(1).name());
+        assertEquals("A", result.get(2).name());
     }
 
     @Test
@@ -126,9 +126,9 @@ class CsvComponentRepositoryGenericSortingTest {
         var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
         // Assert
         assertEquals(4, result.size());
-        assertEquals("Bravo", result.get(0).getName());
-        assertEquals("Charlie", result.get(1).getName());
-        assertEquals("Alpha", result.get(2).getName());
-        assertEquals("Delta", result.get(3).getName());
+        assertEquals("Bravo", result.get(0).name());
+        assertEquals("Charlie", result.get(1).name());
+        assertEquals("Alpha", result.get(2).name());
+        assertEquals("Delta", result.get(3).name());
     }
 }

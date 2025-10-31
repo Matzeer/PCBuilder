@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.infrastructure.persistence;
 
+import fr.esiea.pcbuilder.application.dto.*;
 import fr.esiea.pcbuilder.application.repositories.ComponentGateway;
 import fr.esiea.pcbuilder.domain.entities.*;
 import fr.esiea.pcbuilder.shared.enums.Categories;
@@ -32,12 +33,12 @@ public class CsvComponentRepository implements ComponentGateway {
     }
 
 
-    private Comparator<Component> buildComparator(List<QueryParams> orders) {
+    private Comparator<ComponentDTO> buildComparator(List<QueryParams> orders) {
         if (orders == null || orders.isEmpty()) {
-            return Comparator.comparing(Component::getId);
+            return Comparator.comparing(ComponentDTO::id);
         }
 
-        Comparator<Component> comparator = null;
+        Comparator<ComponentDTO> comparator = null;
 
         for (QueryParams param : orders) {
             String order = param.toString();
@@ -46,315 +47,220 @@ public class CsvComponentRepository implements ComponentGateway {
                 reverse = true;
                 order = order.substring(2);
             }
-            Comparator<Component> next;
+            Comparator<ComponentDTO> next;
             try {
                 next = switch (order) {
-                    case "ID" -> Comparator.comparing(Component::getId);
-                    case "NAME" -> Comparator.comparing(Component::getName, String.CASE_INSENSITIVE_ORDER);
-                    case "CATEGORY" -> Comparator.comparing(c -> c.getCategory().toString());
-                    case "PRICE" -> Comparator.comparing(Component::getPrice);
-                    case "GRADE" -> Comparator.comparing(Component::getGrade);
+                    case "ID" -> Comparator.comparing(ComponentDTO::id);
+                    case "NAME" -> Comparator.comparing(ComponentDTO::name, String.CASE_INSENSITIVE_ORDER);
+                    case "CATEGORY" -> Comparator.comparing(c -> c.category().toString());
+                    case "PRICE" -> Comparator.comparing(ComponentDTO::price);
+                    case "GRADE" -> Comparator.comparing(ComponentDTO::grade);
                     case "COLOR" -> Comparator.comparing(
                             c -> switch (c) {
-                                case Case aCase -> aCase.getColor();
-                                case Ram ram -> ram.getColor();
-                                case MotherBoard motherBoard -> motherBoard.getColor();
-                                case Gpu gpu -> gpu.getColor();
-                                case PowerSupply powerSupply -> powerSupply.getColor();
-                                case null, default -> throw new IllegalArgumentException("Composant sans couleur");
+                                case CaseDTO aCase -> aCase.color();
+                                case RamDTO ram -> ram.color();
+                                case MotherBoardDTO mb -> mb.color();
+                                case GpuDTO gpu -> gpu.color();
+                                case PowerSupplyDTO psu -> psu.color();
+                                default -> throw new IllegalArgumentException("Composant sans couleur");
                             },
                             String.CASE_INSENSITIVE_ORDER
                     );
                     case "PSU" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Case aCase) {
-                                    return aCase.getPsu();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans PSU");
-                                }
+                                if (c instanceof CaseDTO aCase) return aCase.psu();
+                                throw new IllegalArgumentException("Composant sans PSU");
                             },
                             String.CASE_INSENSITIVE_ORDER
                     );
                     case "SIDEPANEL" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Case aCase) {
-                                    return aCase.getSidePanel();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Side Panel");
-                                }
+                                if (c instanceof CaseDTO aCase) return aCase.sidePanel();
+                                throw new IllegalArgumentException("Composant sans Side Panel");
                             },
                             String.CASE_INSENSITIVE_ORDER
                     );
                     case "EXTERNAL525BAYS" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Case aCase) {
-                                    return aCase.getExternal525Bays();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans External 5.25\" Bays");
-                                }
+                                if (c instanceof CaseDTO aCase) return aCase.external525Bays();
+                                throw new IllegalArgumentException("Composant sans External 5.25\" Bays");
                             }
                     );
                     case "INTERNAL35BAYS" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Case aCase) {
-                                    return aCase.getInternal35Bays();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Internal 3.5\" Bays");
-                                }
+                                if (c instanceof CaseDTO aCase) return aCase.internal35Bays();
+                                throw new IllegalArgumentException("Composant sans Internal 3.5\" Bays");
                             }
                     );
                     case "CORECOUNT" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Cpu cpu) {
-                                    return cpu.getCoreCount();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Core Count");
-                                }
+                                if (c instanceof CpuDTO cpu) return cpu.coreCount();
+                                throw new IllegalArgumentException("Composant sans Core Count");
                             }
                     );
                     case "CORECLOCK" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Cpu cpu) {
-                                    return cpu.getCoreClock();
-                                } else if (c instanceof Gpu gpu) {
-                                    return (double) gpu.getCoreClock();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Core Clock");
-                                }
+                                if (c instanceof CpuDTO cpu) return cpu.coreClock();
+                                if (c instanceof GpuDTO gpu) return (double) gpu.coreClock();
+                                throw new IllegalArgumentException("Composant sans Core Clock");
                             }
                     );
                     case "BOOSTCLOCK" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Cpu cpu) {
-                                    return cpu.getBoostClock();
-                                } else if (c instanceof Gpu gpu) {
-                                    return (double) gpu.getBoostClock();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Boost Clock");
-                                }
+                                if (c instanceof CpuDTO cpu) return cpu.boostClock();
+                                if (c instanceof GpuDTO gpu) return (double) gpu.boostClock();
+                                throw new IllegalArgumentException("Composant sans Boost Clock");
                             }
                     );
                     case "TDP" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Cpu cpu) {
-                                    return cpu.getTdp();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans TDP");
-                                }
+                                if (c instanceof CpuDTO cpu) return cpu.tdp();
+                                throw new IllegalArgumentException("Composant sans TDP");
                             }
                     );
                     case "GRAPHICS" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Cpu cpu) {
-                                    return cpu.getGraphics();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Graphics");
-                                }
+                                if (c instanceof CpuDTO cpu) return cpu.graphics();
+                                throw new IllegalArgumentException("Composant sans Graphics");
                             },
                             String.CASE_INSENSITIVE_ORDER
                     );
                     case "SMT" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Cpu cpu) {
-                                    return cpu.isSmt();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans SMT");
-                                }
+                                if (c instanceof CpuDTO cpu) return cpu.smt();
+                                throw new IllegalArgumentException("Composant sans SMT");
                             }
                     );
                     case "CHIPSET" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Gpu gpu) {
-                                    return gpu.getChipset();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Chipset");
-                                }
+                                if (c instanceof GpuDTO gpu) return gpu.chipset();
+                                throw new IllegalArgumentException("Composant sans Chipset");
                             },
                             String.CASE_INSENSITIVE_ORDER
                     );
                     case "MEMORY" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Gpu gpu) {
-                                    return gpu.getMemory();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Memory");
-                                }
+                                if (c instanceof GpuDTO gpu) return gpu.memory();
+                                throw new IllegalArgumentException("Composant sans Memory");
                             }
                     );
                     case "LENGTH" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Gpu gpu) {
-                                    return gpu.getLength();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Length");
-                                }
+                                if (c instanceof GpuDTO gpu) return gpu.length();
+                                throw new IllegalArgumentException("Composant sans Length");
                             }
                     );
                     case "SOCKET" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof MotherBoard motherBoard) {
-                                    return motherBoard.getSocket();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Socket");
-                                }
+                                if (c instanceof MotherBoardDTO mb) return mb.socket();
+                                throw new IllegalArgumentException("Composant sans Socket");
                             },
                             String.CASE_INSENSITIVE_ORDER
                     );
                     case "FORMFACTOR" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof MotherBoard motherBoard) {
-                                    return motherBoard.getFormFactor();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Form Factor");
-                                }
+                                if (c instanceof MotherBoardDTO mb) return mb.formFactor();
+                                throw new IllegalArgumentException("Composant sans Form Factor");
                             },
                             String.CASE_INSENSITIVE_ORDER
                     );
                     case "MAXMEMORY" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof MotherBoard motherBoard) {
-                                    return motherBoard.getMaxMemory();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Max Memory");
-                                }
+                                if (c instanceof MotherBoardDTO mb) return mb.maxMemory();
+                                throw new IllegalArgumentException("Composant sans Max Memory");
                             }
                     );
                     case "MEMORYSLOTS" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof MotherBoard motherBoard) {
-                                    return motherBoard.getMemorySlots();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Memory Slots");
-                                }
+                                if (c instanceof MotherBoardDTO mb) return mb.memorySlots();
+                                throw new IllegalArgumentException("Composant sans Memory Slots");
                             }
                     );
                     case "EFFICIENCY" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof PowerSupply powerSupply) {
-                                    return powerSupply.getEfficiency();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Efficiency");
-                                }
+                                if (c instanceof PowerSupplyDTO psu) return psu.efficiency();
+                                throw new IllegalArgumentException("Composant sans Efficiency");
                             },
                             String.CASE_INSENSITIVE_ORDER
                     );
                     case "WATTAGE" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof PowerSupply powerSupply) {
-                                    return powerSupply.getWattage();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Wattage");
-                                }
+                                if (c instanceof PowerSupplyDTO psu) return psu.wattage();
+                                throw new IllegalArgumentException("Composant sans Wattage");
                             }
                     );
                     case "MODULAR" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof PowerSupply powerSupply) {
-                                    return powerSupply.getModular();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Modular");
-                                }
+                                if (c instanceof PowerSupplyDTO psu) return psu.modular();
+                                throw new IllegalArgumentException("Composant sans Modular");
                             },
                             String.CASE_INSENSITIVE_ORDER
                     );
                     case "SPEED0" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Ram ram) {
-                                    return ram.getSpeed0();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Speed 0");
-                                }
+                                if (c instanceof RamDTO ram) return ram.speed0();
+                                throw new IllegalArgumentException("Composant sans Speed 0");
                             }
                     );
                     case "SPEED1" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Ram ram) {
-                                    return ram.getSpeed1();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Speed 1");
-                                }
+                                if (c instanceof RamDTO ram) return ram.speed1();
+                                throw new IllegalArgumentException("Composant sans Speed 1");
                             }
                     );
                     case "MODULE0" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Ram ram) {
-                                    return ram.getModule0();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Module 0");
-                                }
+                                if (c instanceof RamDTO ram) return ram.module0();
+                                throw new IllegalArgumentException("Composant sans Module 0");
                             }
                     );
                     case "MODULE1" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Ram ram) {
-                                    return ram.getModule1();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Module 1");
-                                }
+                                if (c instanceof RamDTO ram) return ram.module1();
+                                throw new IllegalArgumentException("Composant sans Module 1");
                             }
                     );
                     case "FIRSTWORDLATENCY" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Ram ram) {
-                                    return ram.getFirstWordLatency();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans First Word Latency");
-                                }
+                                if (c instanceof RamDTO ram) return ram.firstWordLatency();
+                                throw new IllegalArgumentException("Composant sans First Word Latency");
                             }
                     );
                     case "CASLATENCY" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Ram ram) {
-                                    return ram.getCasLatency();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans CAS Latency");
-                                }
+                                if (c instanceof RamDTO ram) return ram.casLatency();
+                                throw new IllegalArgumentException("Composant sans CAS Latency");
                             }
                     );
                     case "PRICEPERGB" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Ram ram) {
-                                    return ram.getPricePerGb();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Price Per GB");
-                                }
+                                if (c instanceof RamDTO ram) return ram.pricePerGb();
+                                throw new IllegalArgumentException("Composant sans Price Per GB");
                             }
                     );
                     case "CAPACITY" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Storage storage) {
-                                    return storage.getCapacity();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Capacity");
-                                }
+                                if (c instanceof StorageDTO st) return st.capacity();
+                                throw new IllegalArgumentException("Composant sans Capacity");
                             }
                     );
                     case "STORAGETYPE" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Storage storage) {
-                                    return storage.getStorageType();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Storage Type");
-                                }
+                                if (c instanceof StorageDTO st) return st.storageType();
+                                throw new IllegalArgumentException("Composant sans Storage Type");
                             },
                             String.CASE_INSENSITIVE_ORDER
                     );
                     case "CACHE" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Storage storage) {
-                                    return storage.getCache();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Cache");
-                                }
+                                if (c instanceof StorageDTO st) return st.cache();
+                                throw new IllegalArgumentException("Composant sans Cache");
                             }
                     );
                     case "STORAGEINTERFACE" -> Comparator.comparing(
                             c -> {
-                                if (c instanceof Storage storage) {
-                                    return storage.getStorageInterface();
-                                } else {
-                                    throw new IllegalArgumentException("Composant sans Storage Interface");
-                                }
+                                if (c instanceof StorageDTO st) return st.storageInterface();
+                                throw new IllegalArgumentException("Composant sans Storage Interface");
                             },
                             String.CASE_INSENSITIVE_ORDER
                     );
@@ -371,15 +277,15 @@ public class CsvComponentRepository implements ComponentGateway {
             }
         }
 
-        return comparator != null ? comparator : Comparator.comparing(Component::getId);
+        return comparator != null ? comparator : Comparator.comparing(ComponentDTO::id);
     }
 
 
-    private Component convertLinetoComponent(CSVRecord record) {
+    private ComponentDTO convertLinetoComponent(CSVRecord record) {
         try {
             switch (record.get("category").toLowerCase()) {
                 case "cpu" -> {
-                    return new Cpu(
+                    return new CpuDTO(
                             Integer.parseInt(record.get("id")),
                             record.get("name"),
                             Double.parseDouble(record.get("price")),
@@ -393,7 +299,7 @@ public class CsvComponentRepository implements ComponentGateway {
                     );
                 }
                 case "case" -> {
-                    return new Case(
+                    return new CaseDTO(
                             Integer.parseInt(record.get("id")),
                             record.get("name"),
                             Double.parseDouble(record.get("price")),
@@ -406,7 +312,7 @@ public class CsvComponentRepository implements ComponentGateway {
                     );
                 }
                 case "motherboard" -> {
-                    return new MotherBoard(
+                    return new MotherBoardDTO(
                             Integer.parseInt(record.get("id")),
                             record.get("name"),
                             Double.parseDouble(record.get("price")),
@@ -419,7 +325,7 @@ public class CsvComponentRepository implements ComponentGateway {
                     );
                 }
                 case "video-card" -> {
-                    return new Gpu(
+                    return new GpuDTO(
                             Integer.parseInt(record.get("id")),
                             record.get("name"),
                             Double.parseDouble(record.get("price")),
@@ -433,7 +339,7 @@ public class CsvComponentRepository implements ComponentGateway {
                     );
                 }
                 case "power-supply" -> {
-                    return new PowerSupply(
+                    return new PowerSupplyDTO(
                             Integer.parseInt(record.get("id")),
                             record.get("name"),
                             Double.parseDouble(record.get("price")),
@@ -445,7 +351,7 @@ public class CsvComponentRepository implements ComponentGateway {
                     );
                 }
                 case "memory" -> {
-                    return new Ram(
+                    return new RamDTO(
                             Integer.parseInt(record.get("id")),
                             record.get("name"),
                             Double.parseDouble(record.get("price")),
@@ -461,7 +367,7 @@ public class CsvComponentRepository implements ComponentGateway {
                     );
                 }
                 case "internal-hard-drive" -> {
-                    return new Storage(
+                    return new StorageDTO(
                             Integer.parseInt(record.get("id")),
                             record.get("name"),
                             Double.parseDouble(record.get("price")),
@@ -485,7 +391,7 @@ public class CsvComponentRepository implements ComponentGateway {
 
 
     @Override
-    public ArrayList<Component> getComponentListFilteredOrdered(Categories category, ArrayList<QueryParams> orders, int limit) {
+    public ArrayList<ComponentDTO> getComponentListFilteredOrdered(Categories category, ArrayList<QueryParams> orders, int limit) {
         try (
                 Reader reader = Files.newBufferedReader(csvPath);
                 CSVParser parser = new CSVParser(reader, CSVFormat.DEFAULT.withFirstRecordAsHeader())
@@ -494,7 +400,7 @@ public class CsvComponentRepository implements ComponentGateway {
             return parser.getRecords().stream()
                     .map(this::convertLinetoComponent)
                     .filter(Objects::nonNull)
-                    .filter(obj -> obj.getCategory() == category)
+                    .filter(obj -> obj.category() == category)
                     .sorted(buildComparator(orders))
                     .limit(limit)
                     .collect(Collectors.toCollection(ArrayList::new));

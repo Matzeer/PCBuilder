@@ -4,5 +4,10 @@ import fr.esiea.pcbuilder.shared.enums.Categories;
 
 public record CaseDTO(int id, String name, double price, double grade,
                       String color, String psu, String sidePanel,
-                      int external525Bays, int internal35Bays) {
+                      int external525Bays, int internal35Bays)
+        implements ComponentDTO {
+    @Override
+    public Categories category() {
+        return Categories.CASE;
+    }
 }

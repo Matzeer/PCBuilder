@@ -1,5 +1,7 @@
 package fr.esiea.pcbuilder.infrastructure.persistence;
 
+import fr.esiea.pcbuilder.application.dto.CpuDTO;
+import fr.esiea.pcbuilder.application.dto.GpuDTO;
 import fr.esiea.pcbuilder.domain.entities.Cpu;
 import fr.esiea.pcbuilder.domain.entities.Gpu;
 import fr.esiea.pcbuilder.shared.enums.Categories;
@@ -33,8 +35,8 @@ class CsvComponentRepositoryFilteringTest {
         var result = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 10);
         // Assert
         assertEquals(1, result.size());
-        assertInstanceOf(Cpu.class, result.getFirst());
-        assertEquals("Ryzen 5 5600X", result.getFirst().getName());
+        assertInstanceOf(CpuDTO.class, result.getFirst());
+        assertEquals("Ryzen 5 5600X", result.getFirst().name());
     }
 
     @Test
@@ -73,7 +75,7 @@ class CsvComponentRepositoryFilteringTest {
         // Assert
         assertEquals(2, cpuList.size());
         assertEquals(1, gpuList.size());
-        assertTrue(cpuList.stream().allMatch(c -> c instanceof Cpu));
-        assertTrue(gpuList.stream().allMatch(c -> c instanceof Gpu));
+        assertTrue(cpuList.stream().allMatch(c -> c instanceof CpuDTO));
+        assertTrue(gpuList.stream().allMatch(c -> c instanceof GpuDTO));
     }
 }

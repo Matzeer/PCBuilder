@@ -69,6 +69,6 @@ class CsvComponentRepositoryLimitationTest {
         var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 1);
         // Assert
         assertEquals(1, result.size());
-        assertEquals("Ryzen 5 5600X", result.getFirst().getName());
+        assertEquals("Ryzen 5 5600X", result.getFirst().name());
     }
 }

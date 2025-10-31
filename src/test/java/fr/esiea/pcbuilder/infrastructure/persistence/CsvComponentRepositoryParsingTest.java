@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.infrastructure.persistence;
 
+import fr.esiea.pcbuilder.application.dto.*;
 import fr.esiea.pcbuilder.domain.entities.*;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 import org.junit.jupiter.api.Test;
@@ -21,17 +22,20 @@ class CsvComponentRepositoryParsingTest {
     void cpuLineShouldBeParsedIntoCpuInstance() throws IOException {
         // Arrange
         Path csv = tempDir.resolve("cpu.csv");
-        Files.writeString(csv, "id,name,category,price,grade,core_count,core_clock,boost_clock,tdp,graphics,smt\n" +
-                "1,Ryzen 5 5600X,cpu,200.0,4.7,6,3.7,4.6,65,Vega,true");
+        Files.writeString(csv,
+                "id,name,category,price,grade,core_count,core_clock,boost_clock,tdp,graphics,smt\n" +
+                        "1,Ryzen 5 5600X,cpu,200.0,4.7,6,3.7,4.6,65,Vega,true");
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+
         // Act
         var list = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 10);
+
         // Assert
         assertEquals(1, list.size());
-        assertInstanceOf(Cpu.class, list.getFirst());
-        Cpu cpu = (Cpu) list.getFirst();
-        assertEquals(6, cpu.getCoreCount());
-        assertEquals(3.7, cpu.getCoreClock());
+        assertInstanceOf(CpuDTO.class, list.getFirst());
+        CpuDTO cpu = (CpuDTO) list.getFirst();
+        assertEquals(6, cpu.coreCount());
+        assertEquals(3.7, cpu.coreClock());
     }
 
     @Test
@@ -45,10 +49,10 @@ class CsvComponentRepositoryParsingTest {
         var list = repo.getComponentListFilteredOrdered(Categories.CASE, new ArrayList<>(), 10);
         // Assert
         assertEquals(1, list.size());
-        assertInstanceOf(Case.class, list.getFirst());
-        Case c = (Case) list.getFirst();
-        assertEquals("Black", c.getColor());
-        assertEquals(2, c.getExternal525Bays());
+        assertInstanceOf(CaseDTO.class, list.getFirst());
+        CaseDTO c = (CaseDTO) list.getFirst();
+        assertEquals("Black", c.color());
+        assertEquals(2, c.external525Bays());
     }
 
     @Test
@@ -62,10 +66,10 @@ class CsvComponentRepositoryParsingTest {
         var list = repo.getComponentListFilteredOrdered(Categories.MOTHERBOARD, new ArrayList<>(), 10);
         // Assert
         assertEquals(1, list.size());
-        assertInstanceOf(MotherBoard.class, list.getFirst());
-        MotherBoard m = (MotherBoard) list.getFirst();
-        assertEquals("AM4", m.getSocket());
-        assertEquals(128, m.getMaxMemory());
+        assertInstanceOf(MotherBoardDTO.class, list.getFirst());
+        MotherBoardDTO m = (MotherBoardDTO) list.getFirst();
+        assertEquals("AM4", m.socket());
+        assertEquals(128, m.maxMemory());
     }
 
     @Test
@@ -79,10 +83,10 @@ class CsvComponentRepositoryParsingTest {
         var list = repo.getComponentListFilteredOrdered(Categories.VIDEO_CARD, new ArrayList<>(), 10);
         // Assert
         assertEquals(1, list.size());
-        assertInstanceOf(Gpu.class, list.getFirst());
-        Gpu g = (Gpu) list.getFirst();
-        assertEquals("RTX 4070 Ti", g.getChipset());
-        assertEquals(12288, g.getMemory());
+        assertInstanceOf(GpuDTO.class, list.getFirst());
+        GpuDTO g = (GpuDTO) list.getFirst();
+        assertEquals("RTX 4070 Ti", g.chipset());
+        assertEquals(12288, g.memory());
     }
 
     @Test
@@ -96,10 +100,10 @@ class CsvComponentRepositoryParsingTest {
         var list = repo.getComponentListFilteredOrdered(Categories.POWER_SUPPLY, new ArrayList<>(), 10);
         // Assert
         assertEquals(1, list.size());
-        assertInstanceOf(PowerSupply.class, list.getFirst());
-        PowerSupply psu = (PowerSupply) list.getFirst();
-        assertEquals(750, psu.getWattage());
-        assertEquals("80+ Gold", psu.getEfficiency());
+        assertInstanceOf(PowerSupplyDTO.class, list.getFirst());
+        PowerSupplyDTO psu = (PowerSupplyDTO) list.getFirst();
+        assertEquals(750, psu.wattage());
+        assertEquals("80+ Gold", psu.efficiency());
     }
 
     @Test
@@ -113,10 +117,10 @@ class CsvComponentRepositoryParsingTest {
         var list = repo.getComponentListFilteredOrdered(Categories.INTERNAL_HARD_DRIVE, new ArrayList<>(), 10);
         // Assert
         assertEquals(1, list.size());
-        assertInstanceOf(Storage.class, list.getFirst());
-        Storage s = (Storage) list.getFirst();
-        assertEquals(1000, s.getCapacity());
-        assertEquals("SSD", s.getStorageType());
+        assertInstanceOf(StorageDTO.class, list.getFirst());
+        StorageDTO s = (StorageDTO) list.getFirst();
+        assertEquals(1000, s.capacity());
+        assertEquals("SSD", s.storageType());
     }
 
     @Test
@@ -130,10 +134,10 @@ class CsvComponentRepositoryParsingTest {
         var list = repo.getComponentListFilteredOrdered(Categories.MEMORY, new ArrayList<>(), 10);
         // Assert
         assertEquals(1, list.size());
-        assertInstanceOf(Ram.class, list.getFirst());
-        Ram r = (Ram) list.getFirst();
-        assertEquals(3200, r.getSpeed0());
-        assertEquals(8, r.getModule0());
+        assertInstanceOf(RamDTO.class, list.getFirst());
+        RamDTO r = (RamDTO) list.getFirst();
+        assertEquals(3200, r.speed0());
+        assertEquals(8, r.module0());
     }
 
     @Test
