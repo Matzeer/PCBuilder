@@ -10,7 +10,6 @@ public class UserParams {
     private Categories ActualCategory;
     private ArrayList<QueryParams> orders;
     private int limit;
-    // ajouter la liste de pc construits
 
     public UserParams(Categories firstCategory, int limit) {
         if (limit <0){
