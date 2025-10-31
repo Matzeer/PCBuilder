@@ -1,0 +1,65 @@
+package fr.esiea.pcbuilder.domain.entities;
+
+import fr.esiea.pcbuilder.application.dto.PowerSupplyDTO;
+import fr.esiea.pcbuilder.shared.enums.Categories;
+
+public class PowerSupply extends Component {
+    private String efficiency;
+    private int wattage;
+    private String modular;
+    private String color;
+
+    public PowerSupply(int id, String name, double price, double grade,
+                       String efficiency, int wattage, String modular, String color) {
+        super(id, name, Categories.POWER_SUPPLY, price, grade);
+        this.efficiency = efficiency;
+        this.wattage = wattage;
+        this.modular = modular;
+        this.color = color;
+    }
+
+    public String getEfficiency() {
+        return efficiency;
+    }
+
+    public void setEfficiency(String efficiency) {
+        this.efficiency = efficiency;
+    }
+
+    public int getWattage() {
+        return wattage;
+    }
+
+    public void setWattage(int wattage) {
+        this.wattage = wattage;
+    }
+
+    public String getModular() {
+        return modular;
+    }
+
+    public void setModular(String modular) {
+        this.modular = modular;
+    }
+
+    public String getColor() {
+        return color;
+    }
+
+    public void setColor(String color) {
+        this.color = color;
+    }
+
+    public PowerSupplyDTO toDTO() {
+        return new PowerSupplyDTO(
+                this.getId(),
+                this.getName(),
+                this.getPrice(),
+                this.getGrade(),
+                this.efficiency,
+                this.wattage,
+                this.modular,
+                this.color
+        );
+    }
+}

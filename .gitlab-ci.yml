@@ -1,0 +1,40 @@
+stages: [test]
+
+# Image Maven avec Java 21 (Temurin)
+image: maven:3.9-eclipse-temurin-21
+
+# Variables pour Maven
+variables:
+  MAVEN_OPTS: "-Dmaven.test.failure.ignore=false"
+  MAVEN_CLI_OPTS: "-B -e -DskipITs"
+
+# Cache Maven pour accélérer les builds
+cache:
+  key: maven-cache
+  paths:
+    - .m2/repository
+
+# Job unique pour exécuter tous les tests
+test:
+  stage: test
+  script:
+    # Nettoie, compile, exécute tous les tests JUnit du dossier src/test/java
+    - mvn $MAVEN_CLI_OPTS -DskipTests=false clean verify
+  artifacts:
+    when: always
+    reports:
+      # Rapports de tests JUnit (affichés dans l’onglet “Tests” de GitLab)
+      junit:
+        - target/surefire-reports/*.xml
+        - target/failsafe-reports/*.xml
+      # Rapport de couverture Jacoco (facultatif, visible dans l’interface GitLab)
+      coverage_report:
+        coverage_format: jacoco
+        path: target/site/jacoco/jacoco.xml
+    paths:
+      - target/surefire-reports/
+      - target/site/jacoco/
+  rules:
+    # Exécute la pipeline pour chaque push et merge request
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH
