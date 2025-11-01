@@ -368,18 +368,19 @@ public class CsvComponentRepository implements ComponentGateway {
                 }
                 case "internal-hard-drive" -> {
                     return new StorageDTO(
-                            Integer.parseInt(record.get("id")),
+                            Integer.parseInt(record.get( "id")),
                             record.get("name"),
                             Double.parseDouble(record.get("price")),
                             Double.parseDouble(record.get("grade")),
                             Integer.parseInt(record.get("capacity")),
                             Double.parseDouble(record.get("price_per_gb")),
-                            record.get("storage_type"),
+                            record.get("type"),
                             Integer.parseInt(record.get("cache")),
                             record.get("form_factor"),
-                            record.get("storage_interface")
+                            (record.get("interface"))
                     );
                 }
+
                 default -> {
                     return null;
                 }
@@ -388,8 +389,6 @@ public class CsvComponentRepository implements ComponentGateway {
             return null;
         }
     }
-
-
     @Override
     public ArrayList<ComponentDTO> getComponentListFilteredOrdered(FiltersDTO filtersDTO) {
         try (

@@ -1,6 +1,8 @@
 package fr.esiea.pcbuilder.infrastructure.persistence;
 
 import fr.esiea.pcbuilder.application.dto.*;
+import fr.esiea.pcbuilder.application.repositories.ComponentGateway;
+import fr.esiea.pcbuilder.application.usecases.ListComponentUseCase;
 import fr.esiea.pcbuilder.domain.entities.*;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 import org.junit.jupiter.api.Test;
@@ -114,7 +116,7 @@ class CsvComponentRepositoryParsingTest {
     void storageLineShouldBeParsedIntoStorageInstance() throws IOException {
         // Arrange
         Path csv = tempDir.resolve("storage.csv");
-        Files.writeString(csv, "id,name,category,price,grade,capacity,price_per_gb,storage_type,cache,form_factor,storage_interface\n" +
+        Files.writeString(csv, "id,name,category,price,grade,capacity,price_per_gb,type,cache,form_factor,interface\n" +
                 "1,Samsung 970 EVO,internal-hard-drive,129.99,4.9,1000,0.13,SSD,1024,M.2,NVMe");
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         FiltersDTO filtersDTO = new FiltersDTO(Categories.INTERNAL_HARD_DRIVE, new ArrayList<>(), 10);
@@ -172,4 +174,17 @@ class CsvComponentRepositoryParsingTest {
         // Assert
         assertTrue(list.isEmpty());
     }
+
+    @Test
+    void test() {
+        // Arrange
+        ComponentGateway gatewaytest = new CsvComponentRepository("src/main/resources/data/components.csv");
+        ListComponentUseCase useCase = new ListComponentUseCase(gatewaytest);
+        FiltersDTO filters = new FiltersDTO(Categories.INTERNAL_HARD_DRIVE, new ArrayList<>(), 10);
+        // Act
+        ArrayList<ComponentDTO> result = useCase.execute(filters);
+        // Assert
+        assertEquals(10, result.size());
+    }
+
 }
