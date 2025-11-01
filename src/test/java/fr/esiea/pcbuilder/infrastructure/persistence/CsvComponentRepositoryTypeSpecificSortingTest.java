@@ -208,7 +208,7 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
         Path csv = tempDir.resolve("storage_capacity.csv");
         Files.writeString(csv,
                 """
-                        id,name,category,price,grade,capacity,price_per_gb,storage_type,cache,form_factor,storage_interface
+                        id,name,category,price,grade,capacity,price_per_gb,type,cache,form_factor,interface
                         1,S1,internal-hard-drive,50.0,4.0,2000,0.025,HDD,256,3.5,SATA
                         2,S2,internal-hard-drive,60.0,4.0,500,0.12,SSD,512,2.5,SATA
                         3,S3,internal-hard-drive,70.0,4.0,1000,0.07,SSD,1024,M.2,NVMe
@@ -230,7 +230,7 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
         Path csv = tempDir.resolve("storage_type.csv");
         Files.writeString(csv,
                 """
-                        id,name,category,price,grade,capacity,price_per_gb,storage_type,cache,form_factor,storage_interface
+                        id,name,category,price,grade,capacity,price_per_gb,type,cache,form_factor,interface
                         1,A,internal-hard-drive,50.0,4.0,500,0.12,ssd,512,2.5,SATA
                         2,B,internal-hard-drive,60.0,4.0,500,0.12,HDD,256,3.5,SATA
                         3,C,internal-hard-drive,70.0,4.0,500,0.12,NVMe,512,M.2,PCIe
