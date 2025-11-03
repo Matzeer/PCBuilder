@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.infrastructure.persistence;
 
+import fr.esiea.pcbuilder.application.dto.FiltersDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 import fr.esiea.pcbuilder.shared.enums.QueryParams;
 import org.junit.jupiter.api.Test;
@@ -32,12 +33,13 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.CORECLOCK);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("B", list.get(0).getName());
-        assertEquals("C", list.get(1).getName());
-        assertEquals("A", list.get(2).getName());
+        assertEquals("B", list.get(0).name());
+        assertEquals("C", list.get(1).name());
+        assertEquals("A", list.get(2).name());
     }
 
     @Test
@@ -53,12 +55,13 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.GRAPHICS);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("B", list.get(0).getName()); // Intel UHD
-        assertEquals("C", list.get(1).getName()); // Radeon
-        assertEquals("A", list.get(2).getName()); // vega
+        assertEquals("B", list.get(0).name()); // Intel UHD
+        assertEquals("C", list.get(1).name()); // Radeon
+        assertEquals("A", list.get(2).name()); // vega
     }
 
     // ---------- GPU ----------
@@ -76,12 +79,13 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.MEMORY);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.VIDEO_CARD, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.VIDEO_CARD, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("Z", list.get(0).getName());
-        assertEquals("Y", list.get(1).getName());
-        assertEquals("X", list.get(2).getName());
+        assertEquals("Z", list.get(0).name());
+        assertEquals("Y", list.get(1).name());
+        assertEquals("X", list.get(2).name());
     }
 
     @Test
@@ -95,12 +99,13 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
                         "3,C,video-card,500.0,4.5,RTX 3060,12288,1777,1807,Black,270\n");
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.LENGTH);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.VIDEO_CARD, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.VIDEO_CARD, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("B", list.get(0).getName());
-        assertEquals("C", list.get(1).getName());
-        assertEquals("A", list.get(2).getName());
+        assertEquals("B", list.get(0).name());
+        assertEquals("C", list.get(1).name());
+        assertEquals("A", list.get(2).name());
     }
 
     // ---------- CASE ----------
@@ -118,12 +123,13 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.EXTERNAL525BAYS);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CASE, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.CASE, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("A", list.get(0).getName());
-        assertEquals("C", list.get(1).getName());
-        assertEquals("B", list.get(2).getName());
+        assertEquals("A", list.get(0).name());
+        assertEquals("C", list.get(1).name());
+        assertEquals("B", list.get(2).name());
     }
 
     @Test
@@ -139,12 +145,13 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.COLOR);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CASE, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.CASE, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("B", list.get(0).getName()); // Black
-        assertEquals("C", list.get(1).getName()); // Gray
-        assertEquals("A", list.get(2).getName()); // white
+        assertEquals("B", list.get(0).name()); // Black
+        assertEquals("C", list.get(1).name()); // Gray
+        assertEquals("A", list.get(2).name()); // white
     }
 
     // ---------- MOTHERBOARD ----------
@@ -162,12 +169,13 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.MAXMEMORY);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.MOTHERBOARD, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.MOTHERBOARD, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("B", list.get(0).getName());
-        assertEquals("A", list.get(1).getName());
-        assertEquals("C", list.get(2).getName());
+        assertEquals("B", list.get(0).name());
+        assertEquals("A", list.get(1).name());
+        assertEquals("C", list.get(2).name());
     }
 
     @Test
@@ -183,12 +191,13 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.SOCKET);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.MOTHERBOARD, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.MOTHERBOARD, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("B", list.get(0).getName()); // am4
-        assertEquals("1", String.valueOf(list.get(1).getId())); // LGA1700
-        assertEquals("3", String.valueOf(list.get(2).getId())); // TR4
+        assertEquals("B", list.get(0).name()); // am4
+        assertEquals("1", String.valueOf(list.get(1).id())); // LGA1700
+        assertEquals("3", String.valueOf(list.get(2).id())); // TR4
     }
 
     // ---------- STORAGE ----------
@@ -199,19 +208,20 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
         Path csv = tempDir.resolve("storage_capacity.csv");
         Files.writeString(csv,
                 """
-                        id,name,category,price,grade,capacity,price_per_gb,storage_type,cache,form_factor,storage_interface
+                        id,name,category,price,grade,capacity,price_per_gb,type,cache,form_factor,interface
                         1,S1,internal-hard-drive,50.0,4.0,2000,0.025,HDD,256,3.5,SATA
                         2,S2,internal-hard-drive,60.0,4.0,500,0.12,SSD,512,2.5,SATA
                         3,S3,internal-hard-drive,70.0,4.0,1000,0.07,SSD,1024,M.2,NVMe
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.CAPACITY);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.INTERNAL_HARD_DRIVE, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.INTERNAL_HARD_DRIVE, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("S2", list.get(0).getName());
-        assertEquals("S3", list.get(1).getName());
-        assertEquals("S1", list.get(2).getName());
+        assertEquals("S2", list.get(0).name());
+        assertEquals("S3", list.get(1).name());
+        assertEquals("S1", list.get(2).name());
     }
 
     @Test
@@ -220,19 +230,20 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
         Path csv = tempDir.resolve("storage_type.csv");
         Files.writeString(csv,
                 """
-                        id,name,category,price,grade,capacity,price_per_gb,storage_type,cache,form_factor,storage_interface
+                        id,name,category,price,grade,capacity,price_per_gb,type,cache,form_factor,interface
                         1,A,internal-hard-drive,50.0,4.0,500,0.12,ssd,512,2.5,SATA
                         2,B,internal-hard-drive,60.0,4.0,500,0.12,HDD,256,3.5,SATA
                         3,C,internal-hard-drive,70.0,4.0,500,0.12,NVMe,512,M.2,PCIe
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.STORAGETYPE);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.INTERNAL_HARD_DRIVE, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.INTERNAL_HARD_DRIVE, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("2", String.valueOf(list.get(0).getId())); // HDD
-        assertEquals("3", String.valueOf(list.get(1).getId())); // NVMe
-        assertEquals("1", String.valueOf(list.get(2).getId())); // ssd
+        assertEquals("2", String.valueOf(list.get(0).id())); // HDD
+        assertEquals("3", String.valueOf(list.get(1).id())); // NVMe
+        assertEquals("1", String.valueOf(list.get(2).id())); // ssd
     }
 
     // ---------- RAM ----------
@@ -250,12 +261,13 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.SPEED0);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.MEMORY, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.MEMORY, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("B", list.get(0).getName());
-        assertEquals("A", list.get(1).getName());
-        assertEquals("C", list.get(2).getName());
+        assertEquals("B", list.get(0).name());
+        assertEquals("A", list.get(1).name());
+        assertEquals("C", list.get(2).name());
     }
 
     @Test
@@ -271,12 +283,13 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.CASLATENCY);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.MEMORY, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.MEMORY, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("B", list.get(0).getName());
-        assertEquals("A", list.get(1).getName());
-        assertEquals("C", list.get(2).getName());
+        assertEquals("B", list.get(0).name());
+        assertEquals("A", list.get(1).name());
+        assertEquals("C", list.get(2).name());
     }
 
     @Test
@@ -292,11 +305,12 @@ class CsvComponentRepositoryTypeSpecificSortingTest {
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>(); orders.add(QueryParams.PRICEPERGB);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.MEMORY, orders, 10);
         // Act
-        var list = repo.getComponentListFilteredOrdered(Categories.MEMORY, orders, 10);
+        var list = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
-        assertEquals("B", list.get(0).getName());
-        assertEquals("C", list.get(1).getName());
-        assertEquals("A", list.get(2).getName());
+        assertEquals("B", list.get(0).name());
+        assertEquals("C", list.get(1).name());
+        assertEquals("A", list.get(2).name());
     }
 }

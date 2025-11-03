@@ -18,7 +18,7 @@ public class JsonComputerExporter implements ComputerExporter {
         try (FileWriter writer = new FileWriter(filePath)) {
             gson.toJson(computers, writer);
         } catch (IOException e) {
-            throw new RuntimeException("Failed to export computers to JSON: " + filePath, e);
+            throw new RuntimeException("Echec de l'export du PC vers JSON: " + filePath, e);
         }
     }
 }

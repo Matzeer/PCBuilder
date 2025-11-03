@@ -5,6 +5,7 @@ import fr.esiea.pcbuilder.shared.enums.Categories;
 import fr.esiea.pcbuilder.shared.enums.QueryParams;
 import org.junit.jupiter.api.Test;
 
+import java.io.Console;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,7 +56,7 @@ class SelectFiltersUseCaseTest {
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
                 useCase.execute(request)
         );
-        assertTrue(e.getMessage().contains("Limit must be greater than 0"));
+        assertTrue(e.getMessage().contains("Limite ne peut être inferieur à 0"));
     }
 
     @Test
@@ -69,7 +70,7 @@ class SelectFiltersUseCaseTest {
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
                 useCase.execute(request)
         );
-        assertTrue(e.getMessage().contains("Limit must be greater than 0"));
+        assertTrue(e.getMessage().contains("Limite ne peut être inferieur à 0"));
     }
 
     @Test
@@ -83,7 +84,7 @@ class SelectFiltersUseCaseTest {
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
                 useCase.execute(request)
         );
-        assertTrue(e.getMessage().contains("Category cannot be null"));
+        assertTrue(e.getMessage().contains("Catégorie ne peut être null"));
     }
 
     @Test
@@ -96,7 +97,7 @@ class SelectFiltersUseCaseTest {
         IllegalArgumentException e = assertThrows(IllegalArgumentException.class, () ->
                 useCase.execute(request)
         );
-        assertTrue(e.getMessage().contains("Orders cannot be null"));
+        assertTrue(e.getMessage().contains("Ordre ne peut être null"));
     }
 
     @Test

@@ -71,7 +71,7 @@ public class Cpu extends Component {
         this.smt = smt;
     }
 
-    public CpuDTO toDTO(){
+    public CpuDTO toDTO() {
         return new CpuDTO(
                 this.getId(),
                 this.getName(),

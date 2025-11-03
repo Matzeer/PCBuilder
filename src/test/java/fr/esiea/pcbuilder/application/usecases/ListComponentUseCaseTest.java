@@ -1,7 +1,8 @@
 package fr.esiea.pcbuilder.application.usecases;
 
+import fr.esiea.pcbuilder.application.dto.ComponentDTO;
+import fr.esiea.pcbuilder.application.dto.FiltersDTO;
 import fr.esiea.pcbuilder.application.repositories.ComponentGateway;
-import fr.esiea.pcbuilder.domain.entities.Component;
 import fr.esiea.pcbuilder.infrastructure.persistence.CsvComponentRepository;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 import fr.esiea.pcbuilder.shared.enums.QueryParams;
@@ -50,19 +51,21 @@ class ListComponentUseCaseTest {
     @Test
     void givenValidCpuCategory_whenExecute_thenReturnCpuList() {
         ListComponentUseCase useCase = new ListComponentUseCase(gateway);
+        FiltersDTO filters = new FiltersDTO(Categories.CPU, new ArrayList<>(), 10);
 
-        ArrayList<Component> result = useCase.execute(Categories.CPU, new ArrayList<>(), 10);
+        ArrayList<ComponentDTO> result = useCase.execute(filters);
 
         assertEquals(2, result.size());
-        assertTrue(result.stream().allMatch(c -> c.getCategory() == Categories.CPU));
+        assertTrue(result.stream().allMatch(c -> c.category() == Categories.CPU));
     }
 
     @Test
     void givenCategoryAndLimit_whenExecute_thenReturnLimitedList() {
         ListComponentUseCase useCase = new ListComponentUseCase(gateway);
         ArrayList<QueryParams> orders = new ArrayList<>();
+        FiltersDTO filters = new FiltersDTO(Categories.CPU, orders, 1);
 
-        ArrayList<Component> result = useCase.execute(Categories.CPU, orders, 1);
+        ArrayList<ComponentDTO> result = useCase.execute(filters);
 
         assertEquals(1, result.size());
     }
@@ -72,10 +75,11 @@ class ListComponentUseCaseTest {
         ListComponentUseCase useCase = new ListComponentUseCase(gateway);
         ArrayList<QueryParams> orders = new ArrayList<>();
         orders.add(QueryParams.PRICE);
+        FiltersDTO filters = new FiltersDTO(Categories.CPU, orders, 10);
 
-        ArrayList<Component> result = useCase.execute(Categories.CPU, orders, 10);
+        ArrayList<ComponentDTO> result = useCase.execute(filters);
         assertEquals(2, result.size());
-        assertTrue(result.get(0).getPrice() <= result.get(1).getPrice());
+        assertTrue(result.get(0).price() <= result.get(1).price());
     }
 
     @Test
@@ -83,24 +87,27 @@ class ListComponentUseCaseTest {
         ListComponentUseCase useCase = new ListComponentUseCase(gateway);
         ArrayList<QueryParams> orders = new ArrayList<>();
         orders.add(QueryParams.valueOf("R_PRICE"));
+        FiltersDTO filters = new FiltersDTO(Categories.CPU, orders, 10);
 
-        ArrayList<Component> result = useCase.execute(Categories.CPU, orders, 10);
+        ArrayList<ComponentDTO> result = useCase.execute(filters);
         assertEquals(2, result.size());
-        assertTrue(result.get(0).getPrice() >= result.get(1).getPrice());
+        assertTrue(result.get(0).price() >= result.get(1).price());
     }
 
     @Test
     void givenInvalidCategory_whenExecute_thenThrowIllegalArgument() {
         ListComponentUseCase useCase = new ListComponentUseCase(gateway);
+        FiltersDTO filters = new FiltersDTO(null, new ArrayList<>(), 5);
         assertThrows(IllegalArgumentException.class, () ->
-                useCase.execute(null, new ArrayList<>(), 5));
+                useCase.execute(filters));
     }
 
     @Test
     void givenNegativeLimit_whenExecute_thenThrowIllegalArgument() {
         ListComponentUseCase useCase = new ListComponentUseCase(gateway);
+        FiltersDTO filters = new FiltersDTO(Categories.VIDEO_CARD, new ArrayList<>(), -2);
         assertThrows(IllegalArgumentException.class, () ->
-                useCase.execute(Categories.VIDEO_CARD, new ArrayList<>(), -2));
+                useCase.execute(filters));
     }
 
     @Test
@@ -110,8 +117,9 @@ class ListComponentUseCaseTest {
 
         CsvComponentRepository repo = new CsvComponentRepository(emptyCsv.toString());
         ListComponentUseCase useCase = new ListComponentUseCase(repo);
+        FiltersDTO filters = new FiltersDTO(Categories.CPU, new ArrayList<>(), 5);
 
-        ArrayList<Component> result = useCase.execute(Categories.CPU, new ArrayList<>(), 5);
+        ArrayList<ComponentDTO> result = useCase.execute(filters);
 
         assertTrue(result.isEmpty());
         Files.deleteIfExists(emptyCsv);

@@ -1,5 +1,6 @@
 package fr.esiea.pcbuilder.infrastructure.persistence;
 
+import fr.esiea.pcbuilder.application.dto.FiltersDTO;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 import fr.esiea.pcbuilder.shared.enums.QueryParams;
 import org.junit.jupiter.api.Test;
@@ -28,8 +29,9 @@ class CsvComponentRepositoryLimitationTest {
                         2,Ryzen 7 5800X,cpu,300.0,4.8,8,3.8,4.7,105,Vega,true
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, new ArrayList<>(), 0);
         // Act
-        var result = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 0);
+        var result = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertNotNull(result);
         assertEquals(0, result.size());
@@ -46,8 +48,9 @@ class CsvComponentRepositoryLimitationTest {
                         2,Ryzen 7 5800X,cpu,300.0,4.8,8,3.8,4.7,105,Vega,true
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, new ArrayList<>(), 10);
         // Act
-        var result = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 10);
+        var result = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertEquals(2, result.size());
     }
@@ -65,10 +68,11 @@ class CsvComponentRepositoryLimitationTest {
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
         var orders = new ArrayList<QueryParams>();
         orders.add(QueryParams.PRICE);
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, orders, 1);
         // Act
-        var result = repo.getComponentListFilteredOrdered(Categories.CPU, orders, 1);
+        var result = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertEquals(1, result.size());
-        assertEquals("Ryzen 5 5600X", result.getFirst().getName());
+        assertEquals("Ryzen 5 5600X", result.getFirst().name());
     }
 }

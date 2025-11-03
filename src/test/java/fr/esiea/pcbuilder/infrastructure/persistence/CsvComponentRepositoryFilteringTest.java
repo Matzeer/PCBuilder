@@ -1,5 +1,8 @@
 package fr.esiea.pcbuilder.infrastructure.persistence;
 
+import fr.esiea.pcbuilder.application.dto.CpuDTO;
+import fr.esiea.pcbuilder.application.dto.FiltersDTO;
+import fr.esiea.pcbuilder.application.dto.GpuDTO;
 import fr.esiea.pcbuilder.domain.entities.Cpu;
 import fr.esiea.pcbuilder.domain.entities.Gpu;
 import fr.esiea.pcbuilder.shared.enums.Categories;
@@ -29,12 +32,13 @@ class CsvComponentRepositoryFilteringTest {
                         2,RTX 4070 Ti,video-card,849.99,4.9,0,0,0,0,None,false
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, new ArrayList<>(), 10);
         // Act
-        var result = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 10);
+        var result = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertEquals(1, result.size());
-        assertInstanceOf(Cpu.class, result.getFirst());
-        assertEquals("Ryzen 5 5600X", result.getFirst().getName());
+        assertInstanceOf(CpuDTO.class, result.getFirst());
+        assertEquals("Ryzen 5 5600X", result.getFirst().name());
     }
 
     @Test
@@ -47,8 +51,9 @@ class CsvComponentRepositoryFilteringTest {
                         1,RTX 4070 Ti,video-card,849.99,4.9,RTX 4070 Ti,12288,2310,2610,Black,310
                         """);
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTO = new FiltersDTO(Categories.CPU, new ArrayList<>(), 10);
         // Act
-        var result = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 10);
+        var result = repo.getComponentListFilteredOrdered(filtersDTO);
         // Assert
         assertNotNull(result);
         assertTrue(result.isEmpty());
@@ -67,13 +72,15 @@ class CsvComponentRepositoryFilteringTest {
                         """
         );
         CsvComponentRepository repo = new CsvComponentRepository(csv.toString());
+        FiltersDTO filtersDTOCpu = new FiltersDTO(Categories.CPU, new ArrayList<>(), 10);
+        FiltersDTO filtersDTOGpu = new FiltersDTO(Categories.VIDEO_CARD, new ArrayList<>(), 10);
         // Act
-        var cpuList = repo.getComponentListFilteredOrdered(Categories.CPU, new ArrayList<>(), 10);
-        var gpuList = repo.getComponentListFilteredOrdered(Categories.VIDEO_CARD, new ArrayList<>(), 10);
+        var cpuList = repo.getComponentListFilteredOrdered(filtersDTOCpu);
+        var gpuList = repo.getComponentListFilteredOrdered(filtersDTOGpu);
         // Assert
         assertEquals(2, cpuList.size());
         assertEquals(1, gpuList.size());
-        assertTrue(cpuList.stream().allMatch(c -> c instanceof Cpu));
-        assertTrue(gpuList.stream().allMatch(c -> c instanceof Gpu));
+        assertTrue(cpuList.stream().allMatch(c -> c instanceof CpuDTO));
+        assertTrue(gpuList.stream().allMatch(c -> c instanceof GpuDTO));
     }
 }
