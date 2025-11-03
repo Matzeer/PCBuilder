@@ -3,22 +3,38 @@ package fr.esiea.pcbuilder.application.usecases;
 import fr.esiea.pcbuilder.application.dto.*;
 import fr.esiea.pcbuilder.application.mappers.ComponentMapper;
 import fr.esiea.pcbuilder.application.mappers.ComputerMapper;
+import fr.esiea.pcbuilder.application.repositories.ComputerGateway;
 import fr.esiea.pcbuilder.domain.entities.*;
 import fr.esiea.pcbuilder.domain.factories.*;
 
+import fr.esiea.pcbuilder.infrastructure.persistence.InMemoryRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class SelectionComponentUseCaseTest {
 
+    private ComputerGateway computerGateway;
+    private CreateComputerUseCase createComputerUseCase;
+    private AddComputerUseCase addComputerUseCase;
+
+    @BeforeEach
+    void setUp() {
+        computerGateway = new InMemoryRepository();
+        createComputerUseCase = new CreateComputerUseCase();
+        addComputerUseCase = new AddComputerUseCase(computerGateway);
+    }
+
     @Test
     void executeWithCpuSetsCpuInComputer() {
         // Arrange
-        SelectionComponentUseCase useCase = new SelectionComponentUseCase();
+        SelectionComponentUseCase useCase = new SelectionComponentUseCase(computerGateway);
         Cpu cpu = CpuFactory.createExample();
         CpuDTO cpuDto = (CpuDTO) ComponentMapper.toDto(cpu);
-        ComputerDTO result = useCase.execute(cpuDto);
+        ComputerDTO computerDto = createComputerUseCase.execute(addComputerUseCase);
+        ComputerDTO result = useCase.execute(computerDto,cpuDto);
         // Act
         assertNotNull(result.cpu());
         assertEquals(cpuDto, result.cpu());
@@ -27,10 +43,11 @@ class SelectionComponentUseCaseTest {
     @Test
     void executeWithGpuSetsGpuInComputer() {
         // Arrange
-        SelectionComponentUseCase useCase = new SelectionComponentUseCase();
+        SelectionComponentUseCase useCase = new SelectionComponentUseCase(computerGateway);
         Gpu gpu = GpuFactory.createExample();
         GpuDTO gpuDto = (GpuDTO) ComponentMapper.toDto(gpu);
-        ComputerDTO result = useCase.execute(gpuDto);
+        ComputerDTO computerDto = createComputerUseCase.execute(addComputerUseCase);
+        ComputerDTO result = useCase.execute(computerDto, gpuDto);
         // Act
         assertNotNull(result.gpu());
         assertEquals(gpuDto, result.gpu());
@@ -39,10 +56,11 @@ class SelectionComponentUseCaseTest {
     @Test
     void executeWithMotherBoardSetsMotherBoardInComputer() {
         // Arrange
-        SelectionComponentUseCase useCase = new SelectionComponentUseCase();
+        SelectionComponentUseCase useCase = new SelectionComponentUseCase(computerGateway);
         MotherBoard mb = MotherBoardFactory.createExample();
         MotherBoardDTO mbDto = (MotherBoardDTO) ComponentMapper.toDto(mb);
-        ComputerDTO result = useCase.execute(mbDto);
+        ComputerDTO computerDto = createComputerUseCase.execute(addComputerUseCase);
+        ComputerDTO result = useCase.execute(computerDto,mbDto);
         // Act
         assertNotNull(result.motherBoard());
         assertEquals(mbDto, result.motherBoard());
@@ -51,10 +69,11 @@ class SelectionComponentUseCaseTest {
     @Test
     void executeWithRamSetsRamInComputer() {
         // Arrange
-        SelectionComponentUseCase useCase = new SelectionComponentUseCase();
+        SelectionComponentUseCase useCase = new SelectionComponentUseCase(computerGateway);
         Ram ram = RamFactory.createExample();
         RamDTO ramDto = (RamDTO) ComponentMapper.toDto(ram);
-        ComputerDTO result = useCase.execute(ramDto);
+        ComputerDTO computerDto = createComputerUseCase.execute(addComputerUseCase);
+        ComputerDTO result = useCase.execute(computerDto,ramDto);
         // Act
         assertNotNull(result.ram());
         assertEquals(ramDto, result.ram());
@@ -63,10 +82,11 @@ class SelectionComponentUseCaseTest {
     @Test
     void executeWithStorageSetsStorageInComputer() {
         // Arrange
-        SelectionComponentUseCase useCase = new SelectionComponentUseCase();
+        SelectionComponentUseCase useCase = new SelectionComponentUseCase(computerGateway);
         Storage storage = StorageFactory.createExample();
         StorageDTO storageDto = (StorageDTO) ComponentMapper.toDto(storage);
-        ComputerDTO result = useCase.execute(storageDto);
+        ComputerDTO computerDto = createComputerUseCase.execute(addComputerUseCase);
+        ComputerDTO result = useCase.execute(computerDto,storageDto);
         // Act
         assertNotNull(result.storage());
         assertEquals(storageDto, result.storage());
@@ -75,10 +95,11 @@ class SelectionComponentUseCaseTest {
     @Test
     void executeWithPowerSupplySetsPowerSupplyInComputer() {
         // Arrange
-        SelectionComponentUseCase useCase = new SelectionComponentUseCase();
+        SelectionComponentUseCase useCase = new SelectionComponentUseCase(computerGateway);
         PowerSupply psu = PowerSupplyFactory.createExample();
         PowerSupplyDTO psuDto = (PowerSupplyDTO) ComponentMapper.toDto(psu);
-        ComputerDTO result = useCase.execute(psuDto);
+        ComputerDTO computerDto = createComputerUseCase.execute(addComputerUseCase);
+        ComputerDTO result = useCase.execute(computerDto,psuDto);
         // Act
         assertNotNull(result.powerSupply());
         assertEquals(psuDto, result.powerSupply());
@@ -87,10 +108,11 @@ class SelectionComponentUseCaseTest {
     @Test
     void executeWithCaseSetsCaseInComputer() {
         // Arrange
-        SelectionComponentUseCase useCase = new SelectionComponentUseCase();
+        SelectionComponentUseCase useCase = new SelectionComponentUseCase(computerGateway);
         Case pcCase = CaseFactory.createExample();
         CaseDTO caseDto = (CaseDTO) ComponentMapper.toDto(pcCase);
-        ComputerDTO result = useCase.execute(caseDto);
+        ComputerDTO computerDto = createComputerUseCase.execute(addComputerUseCase);
+        ComputerDTO result = useCase.execute(computerDto,caseDto);
         // Act
         assertNotNull(result.desktopCase());
         assertEquals(caseDto, result.desktopCase());
@@ -99,9 +121,9 @@ class SelectionComponentUseCaseTest {
     @Test
     void executeThrowsWhenComponentIsNull() {
         // Arrange
-        SelectionComponentUseCase useCase = new SelectionComponentUseCase();
-
+        SelectionComponentUseCase useCase = new SelectionComponentUseCase(computerGateway);
+        ComputerDTO computerDto = createComputerUseCase.execute(addComputerUseCase);
         // Act + Assert
-        assertThrows(NullPointerException.class, () -> useCase.execute(null));
+        assertThrows(NullPointerException.class, () -> useCase.execute(computerDto,null));
     }
 }

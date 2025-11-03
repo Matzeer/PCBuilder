@@ -5,8 +5,8 @@ import fr.esiea.pcbuilder.domain.entities.UserParams;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 import fr.esiea.pcbuilder.shared.enums.QueryParams;
 
-import java.util.EnumSet;
 import java.util.ArrayList;
+import java.util.EnumSet;
 
 public class SelectFiltersUseCase {
     private static final int DEFAULT_LIMIT = 10;
@@ -24,22 +24,22 @@ public class SelectFiltersUseCase {
             );
         }
         if (request.limit() <= 0) {
-            throw new IllegalArgumentException("Limit must be greater than 0");
+            throw new IllegalArgumentException("Limite ne peut être inferieur à 0");
         }
 
         if (request.category() == null) {
-            throw new IllegalArgumentException("Category cannot be null");
+            throw new IllegalArgumentException("Catégorie ne peut être null");
         }
         if (!EnumSet.allOf(Categories.class).contains(request.category())) {
-            throw new IllegalArgumentException("Invalid category: " + request.category());
+            throw new IllegalArgumentException("Catégorie invalide: " + request.category());
         }
 
         if (request.orders() == null) {
-            throw new IllegalArgumentException("Orders cannot be null");
+            throw new IllegalArgumentException("Ordre ne peut être null");
         }
         for (var order : request.orders()) {
             if (!request.category().allows(order)) {
-                throw new IllegalArgumentException("Invalid order " + order + " for " + request.category());
+                throw new IllegalArgumentException("Ordre invalide " + order + " pour " + request.category());
             }
         }
 

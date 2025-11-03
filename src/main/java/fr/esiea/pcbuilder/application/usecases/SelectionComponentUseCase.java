@@ -1,23 +1,22 @@
 package fr.esiea.pcbuilder.application.usecases;
 
-import fr.esiea.pcbuilder.application.dto.*;
-import fr.esiea.pcbuilder.application.mappers.ComponentMapper;
+import fr.esiea.pcbuilder.application.dto.ComponentDTO;
+import fr.esiea.pcbuilder.application.dto.ComputerDTO;
 import fr.esiea.pcbuilder.application.mappers.ComponentMapper;
 import fr.esiea.pcbuilder.application.mappers.ComputerMapper;
+import fr.esiea.pcbuilder.application.repositories.ComputerGateway;
 import fr.esiea.pcbuilder.domain.entities.*;
-import fr.esiea.pcbuilder.shared.enums.Categories;
 
 public class SelectionComponentUseCase {
+    private final ComputerGateway repository;
 
-    private final Computer computer;
-
-    public SelectionComponentUseCase(){
-        this.computer = new Computer();
+    public SelectionComponentUseCase(ComputerGateway repository) {
+        this.repository = repository;
     }
 
-    public ComputerDTO execute(ComponentDTO componentDto) {
+    public ComputerDTO execute(ComputerDTO computerDto, ComponentDTO componentDto) {
         Component component = ComponentMapper.toEntity(componentDto);
-
+        Computer computer = ComputerMapper.toEntity(computerDto, repository);
         switch (component.getCategory()) {
             case CPU -> computer.setCpu((Cpu) component);
             case MOTHERBOARD -> computer.setMotherBoard((MotherBoard) component);

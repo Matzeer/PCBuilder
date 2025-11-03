@@ -12,30 +12,27 @@ class AddComputerUseCaseTest {
 
     private ComputerGateway repository;
     private AddComputerUseCase useCase;
+    private CreateComputerUseCase createComputerUseCase;
 
     @BeforeEach
     void setUp() {
         repository = new InMemoryRepository();
         useCase = new AddComputerUseCase(repository);
+        createComputerUseCase = new CreateComputerUseCase();
     }
 
     @Test
     void executeThrowsWhenDtoIsNull() {
-        assertThrows(IllegalArgumentException.class, () -> useCase.execute(null));
-    }
-
-    @Test
-    void executeThrowsWhenAllComponentsAreNull() {
-        // Act
-        ComputerDTO dto = new ComputerDTO(null, null, null, null, null, null, null);
-        // Assert
-        assertThrows(IllegalStateException.class, () -> useCase.execute(dto));
+        ComputerDTO computerDto = null;
+        assertThrows(IllegalArgumentException.class, () -> useCase.execute(computerDto));
     }
 
     @Test
     void executeAddsValidComputerToRepository() {
         // Arrange
-        ComputerDTO dto = new ComputerDTO(
+        ComputerDTO dto = createComputerUseCase.execute(useCase);
+        dto = new ComputerDTO(
+                dto.id(),
                 new CaseDTO(1, "Case", 100, 4.5, "Black", "No", "Glass", 2, 3),
                 new PowerSupplyDTO(2, "PSU", 80, 4.2, "Gold", 750, "Semi", "Black"),
                 new RamDTO(3, "RAM", 60, 4.7, 3200, 3600, 2, 16, 4, "Black", 10, 18),

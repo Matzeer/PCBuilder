@@ -16,18 +16,15 @@ public class AddComputerUseCase {
         if (computerDto == null)
             throw new IllegalArgumentException("ComputerDTO est null");
 
-        boolean isFieldNull = computerDto.cpu() == null ||
-                computerDto.gpu() == null ||
-                computerDto.motherBoard() == null ||
-                computerDto.ram() == null ||
-                computerDto.storage() == null ||
-                computerDto.powerSupply() == null ||
-                computerDto.desktopCase() == null;
+        Computer computer = ComputerMapper.toEntity(computerDto, repository);
+        repository.getComputers().removeIf(c -> c.getId() == computer.getId());
+        repository.getComputers().add(computer);
+    }
 
-        if (isFieldNull)
-            throw new IllegalStateException("Tous les composants du ComputerDTO doivent être non nuls");
+    public void execute(Computer computer) {
+        if (computer == null)
+            throw new IllegalArgumentException("Computer est null");
 
-        Computer computer = ComputerMapper.toEntity(computerDto);
         repository.addComputer(computer);
     }
 }

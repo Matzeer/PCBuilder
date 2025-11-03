@@ -3,9 +3,6 @@ package fr.esiea.pcbuilder.application.usecases;
 import fr.esiea.pcbuilder.application.dto.ComponentDTO;
 import fr.esiea.pcbuilder.application.dto.FiltersDTO;
 import fr.esiea.pcbuilder.application.repositories.ComponentGateway;
-import fr.esiea.pcbuilder.domain.entities.Component;
-import fr.esiea.pcbuilder.shared.enums.Categories;
-import fr.esiea.pcbuilder.shared.enums.QueryParams;
 
 import java.util.ArrayList;
 
@@ -18,7 +15,7 @@ public class ListComponentUseCase {
     }
 
     public ArrayList<ComponentDTO> execute(FiltersDTO filtersDTO) {
-        if(filtersDTO.category() == null || filtersDTO.limit() < 0) {
+        if (filtersDTO.category() == null || filtersDTO.limit() < 0) {
             throw new IllegalArgumentException("Paramètres invalides pour la liste des composants.");
         }
         try {
