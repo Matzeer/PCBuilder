@@ -1,14 +1,25 @@
 package fr.esiea.pcbuilder.application.mappers;
 
-import fr.esiea.pcbuilder.application.dto.*;
+import fr.esiea.pcbuilder.application.dto.ComputerDTO;
+import fr.esiea.pcbuilder.application.repositories.ComputerGateway;
 import fr.esiea.pcbuilder.domain.entities.Computer;
+
+import java.util.Optional;
 
 public class ComputerMapper {
 
-    public static Computer toEntity(ComputerDTO dto) {
+    public static Computer toEntity(ComputerDTO dto, ComputerGateway computerGateway) {
         if (dto == null) return null;
+        System.out.println(computerGateway.getComputers());
+        System.out.println(dto.id());
 
-        Computer computer = new Computer();
+        Optional<Computer> optionalComputer = computerGateway.getComputers().stream()
+                .filter(c -> c.getId() == dto.id())
+                .findFirst();
+
+        if (optionalComputer.isEmpty()) return null;
+
+        Computer computer = optionalComputer.get();
         computer.setDesktopCase(CaseMapper.toEntity(dto.desktopCase()));
         computer.setPowerSupply(PowerSupplyMapper.toEntity(dto.powerSupply()));
         computer.setRam(RamMapper.toEntity(dto.ram()));
@@ -24,6 +35,7 @@ public class ComputerMapper {
         if (entity == null) return null;
 
         return new ComputerDTO(
+                entity.getId(),
                 CaseMapper.toDto(entity.getDesktopCase()),
                 PowerSupplyMapper.toDto(entity.getPowerSupply()),
                 RamMapper.toDto(entity.getRam()),

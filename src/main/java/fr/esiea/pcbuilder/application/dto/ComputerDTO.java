@@ -1,8 +1,7 @@
 package fr.esiea.pcbuilder.application.dto;
 
-import fr.esiea.pcbuilder.domain.entities.*;
-
 public record ComputerDTO(
+        int id,
         CaseDTO desktopCase,
         PowerSupplyDTO powerSupply,
         RamDTO ram,

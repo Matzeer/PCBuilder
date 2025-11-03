@@ -1,6 +1,8 @@
 package fr.esiea.pcbuilder.domain.entities;
 
 public class Computer {
+    private static int nextId = 0;
+    private final int id;
     private Case desktopCase;
     private PowerSupply powerSupply;
     private Ram ram;
@@ -9,10 +11,13 @@ public class Computer {
     private MotherBoard motherBoard;
     private Storage storage;
 
-    public Computer(){}
+    public Computer() {
+        this.id = nextId++;
+    }
 
     public Computer(Case desktopCase, PowerSupply powerSupply, Ram ram,
                     Cpu cpu, Gpu gpu, MotherBoard motherBoard, Storage storage) {
+        this.id = nextId++;
         this.desktopCase = desktopCase;
         this.powerSupply = powerSupply;
         this.ram = ram;
@@ -20,6 +25,10 @@ public class Computer {
         this.gpu = gpu;
         this.motherBoard = motherBoard;
         this.storage = storage;
+    }
+
+    public int getId() {
+        return id;
     }
 
     public Case getDesktopCase() {
