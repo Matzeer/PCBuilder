@@ -10,4 +10,5 @@ public record ComputerDTO(
         GpuDTO gpu,
         MotherBoardDTO motherBoard,
         StorageDTO storage
-)  { }
+) {
+}

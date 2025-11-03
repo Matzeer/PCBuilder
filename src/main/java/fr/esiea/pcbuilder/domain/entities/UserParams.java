@@ -12,8 +12,8 @@ public class UserParams {
     private int limit;
 
     public UserParams(Categories firstCategory, int limit) {
-        if (limit <0){
-            throw new IllegalArgumentException("limit can't be less than 0");
+        if (limit < 0) {
+            throw new IllegalArgumentException("Limite ne peut être inferieur à 0");
         }
         this.ActualCategory = firstCategory;
         this.orders = new ArrayList<>();
@@ -49,8 +49,8 @@ public class UserParams {
     }
 
     public void setLimit(int limit) {
-        if (limit <0){
-            throw new IllegalArgumentException("limit can't be less than 0");
+        if (limit < 0) {
+            throw new IllegalArgumentException("Limite ne peut être inferieur à 0");
         }
         this.limit = limit;
     }

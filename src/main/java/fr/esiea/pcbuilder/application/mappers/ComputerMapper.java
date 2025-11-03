@@ -16,6 +16,7 @@ public class ComputerMapper {
         computer.setGpu(GpuMapper.toEntity(dto.gpu()));
         computer.setMotherBoard(MotherBoardMapper.toEntity(dto.motherBoard()));
         computer.setStorage(StorageMapper.toEntity(dto.storage()));
+
         return computer;
     }
 

@@ -2,8 +2,6 @@ package fr.esiea.pcbuilder.infrastructure.persistence;
 
 import fr.esiea.pcbuilder.application.dto.*;
 import fr.esiea.pcbuilder.application.repositories.ComponentGateway;
-import fr.esiea.pcbuilder.domain.entities.*;
-import fr.esiea.pcbuilder.shared.enums.Categories;
 import fr.esiea.pcbuilder.shared.enums.QueryParams;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -368,7 +366,7 @@ public class CsvComponentRepository implements ComponentGateway {
                 }
                 case "internal-hard-drive" -> {
                     return new StorageDTO(
-                            Integer.parseInt(record.get( "id")),
+                            Integer.parseInt(record.get("id")),
                             record.get("name"),
                             Double.parseDouble(record.get("price")),
                             Double.parseDouble(record.get("grade")),
@@ -389,6 +387,7 @@ public class CsvComponentRepository implements ComponentGateway {
             return null;
         }
     }
+
     @Override
     public ArrayList<ComponentDTO> getComponentListFilteredOrdered(FiltersDTO filtersDTO) {
         try (

@@ -2,7 +2,6 @@ package fr.esiea.pcbuilder.application.mappers;
 
 import fr.esiea.pcbuilder.application.dto.*;
 import fr.esiea.pcbuilder.domain.entities.*;
-import fr.esiea.pcbuilder.shared.enums.Categories;
 
 public class ComponentMapper {
 
