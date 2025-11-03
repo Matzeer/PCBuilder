@@ -2,6 +2,49 @@
 
 ## Changelog
 
+### V1.0.0 - 3/11/2025
+
+#### Ajouts
+
+#### Use Cases
+
+- Ajout d'un use case pour lister les configurations de PC sauvegardées.
+- Ajout d'un use case pour sauvegarder une configuration de PC.
+- Ajout d'un use case pour créer un pc vide
+
+#### entities
+- Ajout d'un id sur l'entité Computer.
+
+#### DTO
+- Ajout de mappers pour convertir des dto en entités et inversement.
+- Adaptation du DTO ComputerDto pour inclure l'id.
+
+#### Gateway
+- Ajout de l'interface view
+
+#### Controller
+
+- Ajout du controller principal pour gérer les configurations de PC.
+
+#### Presenter
+
+- Ajout d'un helper pour traduire les champs en français et centrer les tableaux
+- Ajout d'une liste d'attribut pour la console
+- Ajout d'un presenter pour le menu principal
+- Ajout d'un presenter pour afficher la configuration du pc
+- Ajout d'un presenter pour afficher la liste d'un type de composant
+- Ajout d'un presenter pour afficher la configuration des filtres
+- Ajout d'un presenter pour configurer le tri de la liste
+- Ajout d'un presenter pour configurer la limite
+- Ajout d'un presenter pour charger une configuration de pc existante
+- Ajout d'un presenter pour exporter les configurations de pc
+
+#### view
+- Ajout d'une view en console de dev
+
+
+
+
 ### V0.1.0 - 31/10/2025
 
 #### Ajouts
