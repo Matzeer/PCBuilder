@@ -1,7 +1,7 @@
-package fr.esiea.pcbuilder.infrastructure.presentation.presenters;
+package fr.esiea.pcbuilder.presentation.presenters;
 
 import fr.esiea.pcbuilder.application.dto.FiltersDTO;
-import fr.esiea.pcbuilder.infrastructure.presentation.ui.ConsoleUI;
+import fr.esiea.pcbuilder.presentation.ui.ConsoleUI;
 
 public class LimitPresenter {
 

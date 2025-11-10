@@ -1,8 +1,8 @@
-package fr.esiea.pcbuilder.infrastructure.presentation.presenters;
+package fr.esiea.pcbuilder.presentation.presenters;
 
 import fr.esiea.pcbuilder.application.dto.ComputerDTO;
-import fr.esiea.pcbuilder.infrastructure.presentation.helpers.PresenterHelper;
-import fr.esiea.pcbuilder.infrastructure.presentation.ui.ConsoleUI;
+import fr.esiea.pcbuilder.presentation.helpers.PresenterHelper;
+import fr.esiea.pcbuilder.presentation.ui.ConsoleUI;
 
 import java.util.ArrayList;
 import java.util.List;
