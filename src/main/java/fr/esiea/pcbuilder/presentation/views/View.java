@@ -1,4 +1,4 @@
-package fr.esiea.pcbuilder.infrastructure.presentation.views;
+package fr.esiea.pcbuilder.presentation.views;
 
 public interface View {
     void display(String content);

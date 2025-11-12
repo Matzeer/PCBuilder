@@ -1,4 +1,4 @@
-package fr.esiea.pcbuilder.infrastructure.presentation.helpers;
+package fr.esiea.pcbuilder.presentation.helpers;
 
 import fr.esiea.pcbuilder.shared.enums.QueryParams;
 

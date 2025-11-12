@@ -1,4 +1,4 @@
-package fr.esiea.pcbuilder.infrastructure.presentation.ui;
+package fr.esiea.pcbuilder.presentation.ui;
 
 public class ConsoleUI {
     public static final String RESET = "\033[0m";
