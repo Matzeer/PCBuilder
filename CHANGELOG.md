@@ -2,6 +2,18 @@
 
 ## Changelog
 
+### V1.0.1 - 12/11/2025
+
+#### Ajouts
+
+#### Documentation
+- Ajout du README.md pour expliquer le projet et son architecture.
+- Ajout du DIAGRAMME.md pour illustrer l'architecture du projet.
+
+#### Refactor
+
+- Déplacement de la view et presenters dans le package presentation
+
 ### V1.0.0 - 3/11/2025
 
 #### Ajouts
