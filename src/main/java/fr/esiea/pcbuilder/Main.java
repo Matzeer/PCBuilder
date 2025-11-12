@@ -8,8 +8,8 @@ import fr.esiea.pcbuilder.infrastructure.controllers.ConfiguratorController;
 import fr.esiea.pcbuilder.infrastructure.exporter.JsonComputerExporter;
 import fr.esiea.pcbuilder.infrastructure.persistence.CsvComponentRepository;
 import fr.esiea.pcbuilder.infrastructure.persistence.InMemoryRepository;
-import fr.esiea.pcbuilder.infrastructure.presentation.presenters.*;
-import fr.esiea.pcbuilder.infrastructure.presentation.views.ConsoleView;
+import fr.esiea.pcbuilder.presentation.presenters.*;
+import fr.esiea.pcbuilder.presentation.views.ConsoleView;
 
 public class Main {
     public static void main(String[] args) {

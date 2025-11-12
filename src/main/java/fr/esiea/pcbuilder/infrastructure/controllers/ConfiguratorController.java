@@ -5,9 +5,9 @@ import fr.esiea.pcbuilder.application.dto.ComputerDTO;
 import fr.esiea.pcbuilder.application.dto.FiltersDTO;
 import fr.esiea.pcbuilder.application.exporters.ComputerExporter;
 import fr.esiea.pcbuilder.application.usecases.*;
-import fr.esiea.pcbuilder.infrastructure.presentation.presenters.*;
-import fr.esiea.pcbuilder.infrastructure.presentation.ui.ConsoleUI;
-import fr.esiea.pcbuilder.infrastructure.presentation.views.ConsoleView;
+import fr.esiea.pcbuilder.presentation.presenters.*;
+import fr.esiea.pcbuilder.presentation.ui.ConsoleUI;
+import fr.esiea.pcbuilder.presentation.views.ConsoleView;
 import fr.esiea.pcbuilder.shared.enums.Categories;
 import fr.esiea.pcbuilder.shared.enums.QueryParams;
 
